@@ -1460,7 +1460,7 @@
         });
 
         // =============================================================
-        //  JERARQUÍA (sin cambios, pero con tamaño de fuente uniforme)
+        //  JERARQUÍA (con tamaño de fuente uniforme)
         // =============================================================
         function onSearchInput() {
             const input = document.getElementById('searchAgent');
@@ -1602,7 +1602,6 @@
             function renderTree(node, level = 0) {
                 const hasChildren = node.children && node.children.length > 0;
                 const displayName = node.id ? `${node.nombre} (${node.id})` : node.nombre;
-                // Eliminamos la clase level-0 para que no tenga estilo especial
                 const liClass = '';
                 const iconHtml = (level === 0 || hasChildren) ? '<i class="fas fa-users"></i>' : '<i class="fas fa-user"></i>';
                 const isRoot = (node.nombre === ROOT_NAME);
@@ -1753,7 +1752,6 @@
             });
             document.getElementById('productoCards').innerHTML = productCardsHTML;
 
-            // Ya no usamos dashboardStatus
             actualizarGraficos(prodFiltrada);
             renderizarTopAgentes(prodFiltrada);
             renderizarTopPorProducto(prodFiltrada);
@@ -3220,13 +3218,12 @@
         }
 
         // =============================================================
-        //  CARGA DE DATOS
+        //  CARGA DE DATOS (sin consulta a Bonos, sin alertas)
         // =============================================================
         async function cargarDatos() {
             addLog('⏳ Cargando datos desde Supabase...', 'info');
 
             document.getElementById('cuerpoTabla').innerHTML = `<tr><td colspan="6" style="text-align:center;color:#888;">Cargando...</td></tr>`;
-            // Ya no usamos dashboardStatus
             document.getElementById('contenidoJerarquia').innerHTML = '<p class="loading-message">Cargando...</p>';
             document.getElementById('contenidoContrataciones').innerHTML = '<p class="loading-message">Cargando contratos...</p>';
             document.getElementById('pagosTableContainer').innerHTML = '<p class="loading-message">Cargando pagos...</p>';
@@ -3238,22 +3235,22 @@
             document.getElementById('ventasRecientesContainer').innerHTML = '<p class="loading-message">Cargando...</p>';
 
             try {
-                const [prodResult, jerResult, contResult, pagResult, comResult, bonResult] = await Promise.all([
+                // Consultamos solo las tablas que existen. Bonos se calcula desde Producción.
+                const [prodResult, jerResult, contResult, pagResult, comResult] = await Promise.all([
                     supabaseClient.from('Produccion').select('*'),
                     supabaseClient.from('Jerarquia').select('*'),
                     supabaseClient.from('Contratacion').select('*'),
                     supabaseClient.from('Pagos').select('*'),
-                    supabaseClient.from('Comisiones').select('*'),
-                    supabaseClient.from('Bonos').select('*')
+                    supabaseClient.from('Comisiones').select('*')
                 ]);
 
+                // No incluimos Bonos en el resultado, lo dejamos vacío.
                 const resultados = [
                     { nombre: 'Produccion', data: prodResult.data, error: prodResult.error },
                     { nombre: 'Jerarquia', data: jerResult.data, error: jerResult.error },
                     { nombre: 'Contratacion', data: contResult.data, error: contResult.error },
                     { nombre: 'Pagos', data: pagResult.data, error: pagResult.error },
-                    { nombre: 'Comisiones', data: comResult.data, error: comResult.error },
-                    { nombre: 'Bonos', data: bonResult.data, error: bonResult.error }
+                    { nombre: 'Comisiones', data: comResult.data, error: comResult.error }
                 ];
 
                 let hayError = false;
@@ -3266,17 +3263,15 @@
                     }
                 });
 
-                if (hayError) {
-                    const errores = resultados.filter(r => r.error).map(r => `${r.nombre}: ${r.error.message}`).join('\n');
-                    alert('⚠️ Errores al leer algunas tablas:\n' + errores);
-                }
+                // No mostramos alerta de error, solo registramos en consola.
+                // Si hay error en alguna tabla, igualmente se intentará renderizar con lo que haya.
 
                 datosGlobales.produccion = prodResult.data || [];
                 datosGlobales.jerarquia = jerResult.data || [];
                 datosGlobales.contratacion = contResult.data || [];
                 datosGlobales.pagos = pagResult.data || [];
                 datosGlobales.comisiones = comResult.data || [];
-                datosGlobales.bonos = bonResult.data || [];
+                datosGlobales.bonos = []; // No se usa, pero lo dejamos vacío.
 
                 renderizarDashboard();
                 renderizarProduccion();
@@ -3291,8 +3286,7 @@
 
             } catch (err) {
                 addLog(`❌ Error inesperado: ${err.message}`, 'error');
-                alert('Error en la conexión con Supabase:\n' + err.message);
-                // Podríamos mostrar el error en algún lugar, pero ya no tenemos dashboardStatus
+                // No mostramos alerta, solo consola.
             }
         }
 
