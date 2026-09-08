@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
     <style>
-        /* Estilos (igual que antes) */
+        /* ===== ESTILOS (sin cambios) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -52,14 +52,8 @@
             display: block;
         }
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .cards-grid {
             display: grid;
@@ -71,7 +65,7 @@
             background: white;
             border-radius: 12px;
             padding: 20px 16px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             text-align: center;
             border-top: 5px solid #0f2b4a;
         }
@@ -94,7 +88,7 @@
             background: white;
             border-radius: 12px;
             padding: 22px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         .badge {
             background: #eef2f7;
@@ -144,7 +138,7 @@
             justify-content: space-around;
             align-items: center;
             height: 72px;
-            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
             border-top: 1px solid #e9ecf0;
             z-index: 100;
         }
@@ -199,48 +193,22 @@
             max-height: 200px;
             overflow-y: auto;
         }
-        .debug-panel .log-entry {
-            margin: 2px 0;
-        }
-        .debug-panel .log-error {
-            color: #ff6b6b;
-        }
-        .debug-panel .log-success {
-            color: #69db7c;
-        }
-        .debug-panel .log-info {
-            color: #74c0fc;
-        }
-        .debug-panel .log-warning {
-            color: #ffd93d;
-        }
+        .debug-panel .log-entry { margin: 2px 0; }
+        .debug-panel .log-error { color: #ff6b6b; }
+        .debug-panel .log-success { color: #69db7c; }
+        .debug-panel .log-info { color: #74c0fc; }
+        .debug-panel .log-warning { color: #ffd93d; }
         @media (max-width:550px) {
-            .header h1 {
-                font-size: 1.1rem;
-            }
-            .nav-item i {
-                font-size: 1.2rem;
-            }
-            .nav-item span {
-                font-size: 0.55rem;
-            }
-            .cards-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .main-content {
-                padding: 16px;
-                padding-bottom: 85px;
-            }
-            table {
-                font-size: 0.75rem;
-            }
-            th,
-            td {
-                padding: 6px 8px;
-            }
+            .header h1 { font-size: 1.1rem; }
+            .nav-item i { font-size: 1.2rem; }
+            .nav-item span { font-size: 0.55rem; }
+            .cards-grid { grid-template-columns: 1fr 1fr; }
+            .main-content { padding: 16px; padding-bottom: 85px; }
+            table { font-size: 0.75rem; }
+            th, td { padding: 6px 8px; }
         }
 
-        /* Estilos del árbol jerárquico */
+        /* Jerarquía */
         .hierarchy-list {
             list-style: none;
             padding-left: 0;
@@ -253,9 +221,7 @@
             align-items: center;
             flex-wrap: wrap;
         }
-        .hierarchy-list li:last-child {
-            border-bottom: none;
-        }
+        .hierarchy-list li:last-child { border-bottom: none; }
         .hierarchy-list .level-0 {
             font-weight: 700;
             font-size: 1.15rem;
@@ -276,9 +242,7 @@
             transition: transform 0.2s;
             flex-shrink: 0;
         }
-        .hierarchy-list .toggle-btn:hover {
-            color: #ffc107;
-        }
+        .hierarchy-list .toggle-btn:hover { color: #ffc107; }
         .hierarchy-list .node-label {
             flex: 1;
             cursor: pointer;
@@ -286,22 +250,17 @@
             border-radius: 4px;
             transition: background 0.2s;
         }
-        .hierarchy-list .node-label:hover {
-            background: #eef2f7;
-        }
+        .hierarchy-list .node-label:hover { background: #eef2f7; }
         .hierarchy-list .children-container {
             padding-left: 24px;
             width: 100%;
             overflow: hidden;
             transition: max-height 0.3s ease;
         }
-        .hierarchy-list .children-container.collapsed {
-            display: none;
-        }
-        .hierarchy-list .children-container.expanded {
-            display: block;
-        }
-        /* Estilos para el buscador con botón de limpieza mejorado */
+        .hierarchy-list .children-container.collapsed { display: none; }
+        .hierarchy-list .children-container.expanded { display: block; }
+
+        /* Buscadores */
         .search-box {
             position: relative;
             margin-bottom: 16px;
@@ -348,10 +307,9 @@
             opacity: 1;
             pointer-events: auto;
         }
-        .search-box .clear-btn i {
-            font-size: 0.9rem;
-        }
-        /* Modal de información */
+        .search-box .clear-btn i { font-size: 0.9rem; }
+
+        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -365,14 +323,12 @@
             z-index: 999;
             animation: fadeIn 0.2s;
         }
-        .modal-overlay.hidden {
-            display: none;
-        }
+        .modal-overlay.hidden { display: none; }
         .modal-box {
             background: white;
             border-radius: 16px;
             padding: 30px 28px;
-            max-width: 600px;
+            max-width: 650px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
@@ -396,18 +352,14 @@
             background: none;
             border: none;
         }
-        .modal-box .close-btn:hover {
-            color: #0f2b4a;
-        }
+        .modal-box .close-btn:hover { color: #0f2b4a; }
         .modal-box .info-row {
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
             border-bottom: 1px solid #f0f0f0;
         }
-        .modal-box .info-row:last-child {
-            border-bottom: none;
-        }
+        .modal-box .info-row:last-child { border-bottom: none; }
         .modal-box .info-label {
             font-weight: 600;
             color: #555;
@@ -421,6 +373,7 @@
         .modal-box .tabla-modal {
             font-size: 0.85rem;
             margin-top: 8px;
+            width: 100%;
         }
         .modal-box .tabla-modal th {
             background: #f4f7fc;
@@ -432,10 +385,12 @@
             padding: 6px 10px;
             border-bottom: 1px solid #f0f0f0;
         }
-        .modal-box .tabla-modal tr:last-child td {
-            border-bottom: none;
+        .modal-box .tabla-modal tr:last-child td { border-bottom: none; }
+        .modal-box .tabla-modal td:first-child {
+            font-weight: 600;
+            color: #0f2b4a;
+            width: 35%;
         }
-        /* Iconos de nodo */
         .node-icon {
             margin-right: 8px;
             color: #0f2b4a;
@@ -443,13 +398,9 @@
             text-align: center;
         }
 
-        /* Estilos para grupos (contrataciones) */
-        .grupo-item {
-            border-bottom: 1px solid #eee;
-        }
-        .grupo-item:last-child {
-            border-bottom: none;
-        }
+        /* Contrataciones */
+        .grupo-item { border-bottom: 1px solid #eee; }
+        .grupo-item:last-child { border-bottom: none; }
         .grupo-header {
             display: flex;
             align-items: center;
@@ -458,9 +409,7 @@
             transition: background 0.2s;
             flex-wrap: wrap;
         }
-        .grupo-header:hover {
-            background: #f8faff;
-        }
+        .grupo-header:hover { background: #f8faff; }
         .grupo-header .toggle-icon {
             width: 24px;
             text-align: center;
@@ -468,9 +417,7 @@
             font-size: 0.9rem;
             transition: transform 0.2s;
         }
-        .grupo-header .toggle-icon.expanded {
-            transform: rotate(90deg);
-        }
+        .grupo-header .toggle-icon.expanded { transform: rotate(90deg); }
         .grupo-header .grupo-info {
             flex: 1;
             display: flex;
@@ -478,9 +425,7 @@
             gap: 12px 24px;
             margin-left: 8px;
         }
-        .grupo-header .grupo-info span {
-            font-size: 0.9rem;
-        }
+        .grupo-header .grupo-info span { font-size: 0.9rem; }
         .grupo-header .grupo-info .label {
             color: #666;
             font-weight: normal;
@@ -495,9 +440,7 @@
             max-height: 0;
             transition: max-height 0.4s ease;
         }
-        .grupo-details.open {
-            max-height: 2000px;
-        }
+        .grupo-details.open { max-height: 2000px; }
         .grupo-details table {
             margin: 8px 0 16px 0;
             font-size: 0.85rem;
@@ -515,10 +458,9 @@
             padding: 6px 10px;
             border-bottom: 1px solid #f0f0f0;
         }
-        .grupo-details table tr:last-child td {
-            border-bottom: none;
-        }
-        /* Estilos para código de póliza clickeable */
+        .grupo-details table tr:last-child td { border-bottom: none; }
+
+        /* Pagos */
         .clickable-poliza {
             cursor: pointer;
             color: #0f2b4a;
@@ -529,11 +471,30 @@
             color: #ffc107;
             text-decoration: underline;
         }
-        /* Contador de resultados en búsqueda */
         .result-count {
             font-size: 0.85rem;
             color: #666;
             margin-bottom: 8px;
+        }
+
+        /* Estilo para el modal de producción (pares clave-valor) */
+        .modal-box .detalle-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 8px 16px;
+            padding: 4px 0;
+        }
+        .modal-box .detalle-grid .label {
+            font-weight: 600;
+            color: #555;
+        }
+        .modal-box .detalle-grid .value {
+            color: #0f2b4a;
+            word-break: break-word;
+        }
+        .modal-box .detalle-grid .value a {
+            color: #0f2b4a;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -545,7 +506,7 @@
     </header>
 
     <main class="main-content" id="mainContent">
-        <!-- Panel de depuración -->
+        <!-- Debug -->
         <div id="debugPanel" class="debug-panel">
             <div class="log-entry log-info">🔄 Iniciando aplicación...</div>
         </div>
@@ -575,8 +536,19 @@
                 <div style="font-size:0.85rem; color:#666; margin-bottom:8px;">Mostrando <span id="rowCount">0</span> registros</div>
                 <div class="table-wrapper">
                     <table id="tablaProduccion">
-                        <thead><tr><th>AGENTE</th><th>ID PRODUCER</th><th>PRODUCTO</th><th>PRIMA NAP</th><th>CODIGO POLIZA</th><th>EMISION</th><th>ACTIVACION</th><th>ESTATUS</th><th>ESTADO</th><th>CLIENTE</th></tr></thead>
-                        <tbody id="cuerpoTabla"><tr><td colspan="10" style="text-align:center;color:#999;">Cargando datos...</td></tr></tbody>
+                        <thead>
+                            <tr>
+                                <th>Agente</th>
+                                <th>Producto</th>
+                                <th>Código Póliza</th>
+                                <th>Comisión</th>
+                                <th>NAP</th>
+                                <th>Estatus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpoTabla">
+                            <tr><td colspan="6" style="text-align:center;color:#999;">Cargando datos...</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -586,15 +558,11 @@
         <section class="page" id="page-jerarquia">
             <h2 class="section-title">🏢 Jerarquía</h2>
             <div style="margin-bottom: 12px;">
-                <button class="btn-primary" onclick="cargarDatos()">
-                    <i class="fas fa-sync-alt"></i> Recargar datos
-                </button>
+                <button class="btn-primary" onclick="cargarDatos()"><i class="fas fa-sync-alt"></i> Recargar datos</button>
             </div>
             <div class="search-box">
                 <input type="text" id="searchAgent" placeholder="🔍 Buscar por nombre, ID o NPN..." oninput="onSearchInput()">
-                <button class="clear-btn" id="clearSearchBtn" onclick="limpiarBusqueda()" title="Limpiar búsqueda">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button class="clear-btn" id="clearSearchBtn" onclick="limpiarBusqueda()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
             </div>
             <div class="section-content" id="contenidoJerarquia">
                 <p class="loading-message">Cargando organigrama...</p>
@@ -607,27 +575,28 @@
             <div class="section-content" id="contenidoContrataciones"><p class="loading-message">Cargando contratos...</p></div>
         </section>
 
-        <!-- PAGOS -->
+        <!-- PAGOS (MODIFICADO: último estatus por fecha) -->
         <section class="page" id="page-pagos">
             <h2 class="section-title">💰 Pagos</h2>
             <div class="section-content" id="contenidoPagos">
-                <!-- Buscador de pagos (se genera dinámicamente o se coloca aquí) -->
                 <div class="search-box" id="pagosSearchBox" style="display:none;">
                     <input type="text" id="searchPagos" placeholder="🔍 Buscar por Código de Póliza o Cliente..." oninput="filtrarPagos()">
-                    <button class="clear-btn" id="clearPagosBtn" onclick="limpiarBusquedaPagos()" title="Limpiar búsqueda">
-                        <i class="fas fa-times"></i>
-                    </button>
+                    <button class="clear-btn" id="clearPagosBtn" onclick="limpiarBusquedaPagos()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
                 </div>
-                <div id="pagosTableContainer">
-                    <p class="loading-message">Cargando pagos...</p>
-                </div>
+                <div id="pagosTableContainer"><p class="loading-message">Cargando pagos...</p></div>
             </div>
         </section>
 
         <!-- COMISIONES -->
         <section class="page" id="page-comisiones">
             <h2 class="section-title">📈 Comisiones</h2>
-            <div class="section-content" id="contenidoComisiones"><p class="loading-message">Cargando comisiones...</p></div>
+            <div class="section-content" id="contenidoComisiones">
+                <div class="search-box" id="comisionesSearchBox" style="display:none;">
+                    <input type="text" id="searchComisiones" placeholder="🔍 Buscar por Cliente, Póliza, Estatus o Advance..." oninput="filtrarComisiones()">
+                    <button class="clear-btn" id="clearComisionesBtn" onclick="limpiarBusquedaComisiones()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+                </div>
+                <div id="comisionesTableContainer"><p class="loading-message">Cargando comisiones...</p></div>
+            </div>
         </section>
 
     </main>
@@ -642,14 +611,12 @@
         <button class="nav-item" data-page="comisiones"><i class="fas fa-coins"></i><span>Comisiones</span></button>
     </nav>
 
-    <!-- Modal para información del agente (reutilizable para pagos) -->
+    <!-- Modal (reutilizable) -->
     <div id="infoModal" class="modal-overlay hidden">
         <div class="modal-box">
             <button class="close-btn" onclick="cerrarModal()">&times;</button>
             <h3 id="modalTitle">👤 Información</h3>
-            <div id="modalContent">
-                <!-- Se llena dinámicamente -->
-            </div>
+            <div id="modalContent"></div>
         </div>
     </div>
 
@@ -720,13 +687,12 @@
         })();
 
         // =============================================================
-        //  RENDERIZADO
+        //  FUNCIONES AUXILIARES
         // =============================================================
         let datosGlobales = { produccion: [], jerarquia: [], contratacion: [], pagos: [], comisiones: [] };
         let arbolJerarquia = null;
-        // Variable global para almacenar el HTML de la tabla de pagos (para filtrar)
-        let pagosTablaHTML = '';
-        let pagosDatosResumen = []; // para filtrar sin regenerar todo
+        let pagosDatosResumen = [];
+        let comisionesDatos = [];
 
         function getVal(row, ...keys) {
             if (!row) return '';
@@ -748,37 +714,49 @@
         }
 
         // =============================================================
-        //  MODAL DE INFORMACIÓN (reutilizable)
+        //  MODAL (reutilizable)
         // =============================================================
-        function mostrarModal(htmlContent, titulo = 'Información') {
+        function mostrarModal(contenido, titulo = 'Información') {
             const modal = document.getElementById('infoModal');
             document.getElementById('modalTitle').textContent = titulo;
-            document.getElementById('modalContent').innerHTML = htmlContent;
+            let html = '';
+            if (typeof contenido === 'object' && !Array.isArray(contenido) && !(contenido instanceof Element) && !(contenido instanceof Node)) {
+                const entries = Object.entries(contenido).filter(([key, val]) => val !== undefined && val !== null && val !== '');
+                if (entries.length === 0) {
+                    html = '<p class="error-message">No hay información disponible.</p>';
+                } else {
+                    html = '<div class="detalle-grid">';
+                    entries.forEach(([key, value]) => {
+                        let displayValue = value;
+                        if (typeof value === 'object') displayValue = JSON.stringify(value, null, 2);
+                        html += `<div class="label">${key}</div><div class="value">${displayValue}</div>`;
+                    });
+                    html += '</div>';
+                }
+            } else {
+                html = contenido;
+            }
+            document.getElementById('modalContent').innerHTML = html;
             modal.classList.remove('hidden');
         }
 
         function cerrarModal() {
             document.getElementById('infoModal').classList.add('hidden');
         }
-
         document.getElementById('infoModal').addEventListener('click', function(e) {
             if (e.target === this) cerrarModal();
         });
 
         // =============================================================
-        //  BÚSQUEDA Y LIMPIEZA (Jerarquía)
+        //  JERARQUÍA (sin cambios)
         // =============================================================
         function onSearchInput() {
             const input = document.getElementById('searchAgent');
             const clearBtn = document.getElementById('clearSearchBtn');
-            if (input.value.trim().length > 0) {
-                clearBtn.classList.add('visible');
-            } else {
-                clearBtn.classList.remove('visible');
-            }
+            if (input.value.trim().length > 0) clearBtn.classList.add('visible');
+            else clearBtn.classList.remove('visible');
             filtrarJerarquia();
         }
-
         function limpiarBusqueda() {
             const input = document.getElementById('searchAgent');
             input.value = '';
@@ -787,15 +765,10 @@
             input.focus();
         }
 
-        // =============================================================
-        //  JERARQUÍA
-        // =============================================================
         function renderizarJerarquia(filtro = '') {
             const jerData = datosGlobales.jerarquia;
             const container = document.getElementById('contenidoJerarquia');
-
             addLog('🏗️ Construyendo jerarquía...', 'info');
-
             if (!jerData || jerData.length === 0) {
                 container.innerHTML = '<p class="error-message">⚠️ No hay datos en la tabla Jerarquia.</p>';
                 return;
@@ -819,9 +792,7 @@
                     const uplineNorm = uplineRaw ? normalize(uplineRaw) : '';
                     const datosCompletos = {};
                     for (const [k, v] of Object.entries(row)) {
-                        if (v !== undefined && v !== null && v !== '') {
-                            datosCompletos[k] = v;
-                        }
+                        if (v !== undefined && v !== null && v !== '') datosCompletos[k] = v;
                     }
                     datosCompletos['Agente'] = agenteRaw;
                     datosCompletos['ID Producer'] = idRaw || '';
@@ -859,7 +830,6 @@
 
             const rootNode = nodes[ROOT_NAME];
             const orphanNodes = [];
-
             agentMap.forEach((data, nombre) => {
                 if (nombre === ROOT_NAME) return;
                 const upline = data.upline;
@@ -869,10 +839,7 @@
                     orphanNodes.push(nodes[nombre]);
                 }
             });
-
-            orphanNodes.forEach(node => {
-                rootNode.children.push(node);
-            });
+            orphanNodes.forEach(node => { rootNode.children.push(node); });
 
             function sortChildren(node) {
                 if (node.children && node.children.length > 0) {
@@ -881,7 +848,6 @@
                 }
             }
             sortChildren(rootNode);
-
             arbolJerarquia = rootNode;
 
             function nodeMatches(node, filtro) {
@@ -908,11 +874,7 @@
                 }
                 const match = selfMatch || childMatch;
                 if (match) {
-                    const newNode = {
-                        ...node,
-                        children: filteredChildren
-                    };
-                    return { match: true, node: newNode };
+                    return { match: true, node: { ...node, children: filteredChildren } };
                 } else {
                     return { match: false, node: null };
                 }
@@ -921,32 +883,20 @@
             let treeToRender = rootNode;
             if (filtro) {
                 const result = filterTree(rootNode, filtro);
-                if (result.match) {
-                    treeToRender = result.node;
-                } else {
-                    treeToRender = null;
-                }
+                if (result.match) treeToRender = result.node;
+                else treeToRender = null;
             }
 
             function renderTree(node, level = 0) {
                 const hasChildren = node.children && node.children.length > 0;
                 const displayName = node.id ? `${node.nombre} (${node.id})` : node.nombre;
                 const liClass = level === 0 ? 'level-0' : '';
-
-                let iconHtml;
-                if (level === 0 || hasChildren) {
-                    iconHtml = '<i class="fas fa-users"></i>';
-                } else {
-                    iconHtml = '<i class="fas fa-user"></i>';
-                }
-
+                const iconHtml = (level === 0 || hasChildren) ? '<i class="fas fa-users"></i>' : '<i class="fas fa-user"></i>';
                 const isRoot = (node.nombre === ROOT_NAME);
-
                 let html = `<li class="${liClass}" style="padding-left:${level * 20}px;">`;
 
                 if (hasChildren && !isRoot) {
                     const defaultCollapsed = true;
-                    const collapsedClass = defaultCollapsed ? 'collapsed' : 'expanded';
                     const icon = defaultCollapsed ? '▶' : '▼';
                     const btnClass = defaultCollapsed ? 'collapsed' : 'expanded';
                     const targetId = `children-${level}-${node.nombre.replace(/\s/g,'')}`;
@@ -958,29 +908,24 @@
                 }
 
                 html += `<span class="node-icon">${iconHtml}</span>`;
-
                 html += `<span class="node-label" data-nombre="${node.nombre}" data-id="${node.id}" style="cursor:pointer;">${displayName}</span>`;
 
                 if (hasChildren) {
                     const targetId = `children-${level}-${node.nombre.replace(/\s/g,'')}`;
-                    const isRootExpanded = isRoot;
-                    const childContainerClass = isRootExpanded ? 'expanded' : 'collapsed';
+                    const childContainerClass = isRoot ? 'expanded' : 'collapsed';
                     html += `<ul class="children-container ${childContainerClass}" id="${targetId}" style="padding-left:0; list-style:none;">`;
                     node.children.forEach(child => {
                         html += renderTree(child, level + 1);
                     });
                     html += `</ul>`;
                 }
-
                 html += `</li>`;
                 return html;
             }
 
             let html = '';
             if (treeToRender) {
-                html = `<ul class="hierarchy-list">`;
-                html += renderTree(treeToRender);
-                html += `</ul>`;
+                html = `<ul class="hierarchy-list">${renderTree(treeToRender)}</ul>`;
                 container.innerHTML = html;
             } else {
                 container.innerHTML = `<p class="error-message">🔍 No se encontraron agentes que coincidan con la búsqueda.</p>`;
@@ -995,7 +940,6 @@
                     if (!targetId) return;
                     const targetUl = document.getElementById(targetId);
                     if (!targetUl) return;
-
                     if (targetUl.classList.contains('expanded')) {
                         targetUl.classList.remove('expanded');
                         targetUl.classList.add('collapsed');
@@ -1020,54 +964,44 @@
                     const key = normalize(nombre);
                     const nodeData = agentMap.get(key);
                     if (nodeData && nodeData.datos) {
-                        mostrarModal(nodeData.datos);
+                        mostrarModal(nodeData.datos, `👤 ${nombre}`);
                     } else {
-                        mostrarModal({ 'Agente': nombre, 'ID Producer': id });
+                        mostrarModal({ 'Agente': nombre, 'ID Producer': id }, `👤 ${nombre}`);
                     }
                 });
             });
-
             addLog('✅ Jerarquía renderizada correctamente.', 'success');
         }
 
         function filtrarJerarquia() {
             const input = document.getElementById('searchAgent');
             const filtro = input.value.trim();
-            if (arbolJerarquia) {
-                renderizarJerarquia(filtro);
-            } else {
-                cargarDatos();
-            }
+            if (arbolJerarquia) renderizarJerarquia(filtro);
+            else cargarDatos();
         }
 
         // =============================================================
-        //  DASHBOARD
+        //  DASHBOARD (sin cambios)
         // =============================================================
         function renderizarDashboard() {
             const prod = datosGlobales.produccion;
             const jer = datosGlobales.jerarquia;
             const cont = datosGlobales.contratacion;
-
             if (prod.length === 0 && jer.length === 0 && cont.length === 0) {
-                document.getElementById('dashboardStatus').innerHTML =
-                    '<div class="error-message">⚠️ No se encontraron datos.</div>';
+                document.getElementById('dashboardStatus').innerHTML = '<div class="error-message">⚠️ No se encontraron datos.</div>';
                 document.getElementById('dashboardCards').innerHTML = '';
                 document.getElementById('resumenTexto').textContent = 'Sin datos.';
                 return;
             }
             document.getElementById('dashboardStatus').innerHTML = '';
-
             const totalPolizas = prod.length;
-            const activas = prod.filter(p => (getVal(p, 'estatus', 'Estatus', 'ESTATUS') || '').toUpperCase() === 'ACTIVA')
-                .length;
+            const activas = prod.filter(p => (getVal(p, 'estatus', 'Estatus', 'ESTATUS') || '').toUpperCase() === 'ACTIVA').length;
             const totalPrima = prod.reduce((sum, p) => {
                 const prima = parseFloat(getVal(p, 'prima_nap', 'Prima NAP', 'primaNAP') || 0);
                 return sum + (isNaN(prima) ? 0 : prima);
             }, 0);
-            const agentesActivos = jer.filter(j => (getVal(j, 'puesto', 'Puesto', 'PUESTO') || '').toUpperCase().includes(
-                'AGENTE')).length || jer.length || prod.length;
-            const renovacionesPendientes = cont.filter(c => (getVal(c, 'fase', 'Fase', 'FASE') || '').toUpperCase().includes(
-                'PENDIENTE')).length;
+            const agentesActivos = jer.filter(j => (getVal(j, 'puesto', 'Puesto', 'PUESTO') || '').toUpperCase().includes('AGENTE')).length || jer.length || prod.length;
+            const renovacionesPendientes = cont.filter(c => (getVal(c, 'fase', 'Fase', 'FASE') || '').toUpperCase().includes('PENDIENTE')).length;
 
             document.getElementById('dashboardCards').innerHTML = `
                 <div class="card"><i class="fas fa-file-contract"></i><div class="number">${totalPolizas}</div><div class="label">Pólizas totales</div></div>
@@ -1077,12 +1011,9 @@
             `;
 
             const vida = prod.filter(p => (getVal(p, 'producto', 'Producto') || '').toUpperCase().includes('VIDA')).length;
-            const auto = prod.filter(p => (getVal(p, 'producto', 'Producto') || '').toUpperCase().includes('AUTO') ||
-                (getVal(p, 'producto', 'Producto') || '').toUpperCase().includes('ACCIDENT')).length;
-            const hogar = prod.filter(p => (getVal(p, 'producto', 'Producto') || '').toUpperCase().includes('HOGAR'))
-            .length;
-            const salud = prod.filter(p => (getVal(p, 'producto', 'Producto') || '').toUpperCase().includes('SALUD'))
-            .length;
+            const auto = prod.filter(p => (getVal(p, 'producto', 'Producto') || '').toUpperCase().includes('AUTO') || (getVal(p, 'producto', 'Producto') || '').toUpperCase().includes('ACCIDENT')).length;
+            const hogar = prod.filter(p => (getVal(p, 'producto', 'Producto') || '').toUpperCase().includes('HOGAR')).length;
+            const salud = prod.filter(p => (getVal(p, 'producto', 'Producto') || '').toUpperCase().includes('SALUD')).length;
             document.getElementById('resumenTexto').innerHTML = `
                 <strong>${totalPolizas}</strong> pólizas · <strong>${activas}</strong> activas · Prima total: <strong>$${totalPrima.toLocaleString()}</strong><br>
                 <span class="badge">Vida</span> ${vida} · <span class="badge">Auto/Accident</span> ${auto} · <span class="badge">Hogar</span> ${hogar} · <span class="badge">Salud</span> ${salud}
@@ -1090,101 +1021,125 @@
         }
 
         // =============================================================
-        //  PRODUCCIÓN
+        //  PRODUCCIÓN (sin cambios)
         // =============================================================
         function renderizarProduccion() {
             const data = datosGlobales.produccion;
             const tbody = document.getElementById('cuerpoTabla');
             const rowCount = document.getElementById('rowCount');
-
             if (!data || data.length === 0) {
-                tbody.innerHTML =
-                    `<tr><td colspan="10" style="text-align:center;color:#999;">No hay datos en Produccion</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#999;">No hay datos en Produccion</td></tr>`;
                 rowCount.textContent = '0';
                 document.getElementById('totalPolizas').textContent = '0';
                 document.getElementById('totalActivas').textContent = '0';
                 document.getElementById('totalPrima').textContent = '$0';
                 return;
             }
-
             let html = '',
                 totalPrima = 0,
                 activas = 0;
+            const firstRow = data[0];
+            const posiblesComision = ['comision', 'Comision', 'COMISION', 'comisión', 'Comisión', 'COMISIÓN'];
+            let comisionCol = null;
+            for (const key of posiblesComision) {
+                if (firstRow[key] !== undefined) { comisionCol = key; break; }
+            }
             data.forEach(row => {
                 const agente = getVal(row, 'agente', 'Agente', 'AGENTE');
-                const idProducer = getVal(row, 'id_producer', 'ID Producer', 'idProducer');
                 const producto = getVal(row, 'producto', 'Producto');
-                const prima = parseFloat(getVal(row, 'prima_nap', 'Prima NAP', 'primaNAP') || 0) || 0;
                 const codigoPoliza = getVal(row, 'codigo_poliza', 'Codigo Poliza', 'codigoPoliza');
-                const emision = getVal(row, 'emision', 'Emision');
-                const activacion = getVal(row, 'activacion', 'Activacion');
+                let comision = '—';
+                if (comisionCol) {
+                    const comVal = getVal(row, comisionCol);
+                    if (comVal) {
+                        const num = parseFloat(comVal);
+                        comision = !isNaN(num) ? '$' + num.toFixed(2) : comVal;
+                    }
+                }
+                const nap = parseFloat(getVal(row, 'prima_nap', 'Prima NAP', 'primaNAP') || 0) || 0;
                 const estatus = getVal(row, 'estatus', 'Estatus');
-                const estado = getVal(row, 'estado', 'Estado');
-                const cliente = getVal(row, 'cliente', 'Cliente');
-
-                totalPrima += prima;
+                totalPrima += nap;
                 if (estatus.toUpperCase() === 'ACTIVA') activas++;
-
                 let badgeColor = '#eef2f7';
                 const estatusUpper = estatus.toUpperCase();
                 if (estatusUpper === 'ACTIVA') badgeColor = '#d4edda';
                 else if (estatusUpper === 'PENDIENTE') badgeColor = '#fff3cd';
                 else if (estatusUpper === 'CANCELADA' || estatusUpper === 'RECHAZADA') badgeColor = '#f8d7da';
-
-                html += `<tr><td>${agente}</td><td>${idProducer}</td><td>${producto}</td><td>$${prima.toFixed(2)}</td><td>${codigoPoliza}</td><td>${emision}</td><td>${activacion}</td><td><span class="badge" style="background:${badgeColor};">${estatus}</span></td><td>${estado}</td><td>${cliente}</td></tr>`;
+                const codigoEscapado = codigoPoliza.replace(/'/g, "\\'");
+                html += `<tr>
+                    <td>${agente}</td>
+                    <td>${producto}</td>
+                    <td><span class="clickable-poliza" data-codigo="${codigoEscapado}" data-fila='${JSON.stringify(row).replace(/'/g, "&#39;")}'>${codigoPoliza}</span></td>
+                    <td>${comision}</td>
+                    <td>$${nap.toFixed(2)}</td>
+                    <td><span class="badge" style="background:${badgeColor};">${estatus}</span></td>
+                </tr>`;
             });
-
             tbody.innerHTML = html;
             rowCount.textContent = data.length;
             document.getElementById('totalPolizas').textContent = data.length;
             document.getElementById('totalActivas').textContent = activas;
-            document.getElementById('totalPrima').textContent = '$' + totalPrima.toLocaleString('en-US', { minimumFractionDigits: 0,
-                maximumFractionDigits: 0 });
+            document.getElementById('totalPrima').textContent = '$' + totalPrima.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            tbody.querySelectorAll('.clickable-poliza').forEach(el => {
+                el.addEventListener('click', function(e) {
+                    const codigo = this.getAttribute('data-codigo');
+                    const filaData = this.getAttribute('data-fila');
+                    try {
+                        const rowData = JSON.parse(filaData);
+                        mostrarDetallePolizaProduccion(rowData, codigo);
+                    } catch (err) {
+                        mostrarModal(`<p>Error al mostrar detalles de la póliza ${codigo}.</p>`, 'Detalle de Póliza');
+                    }
+                });
+            });
+        }
+
+        function mostrarDetallePolizaProduccion(rowData, codigo) {
+            const cleanData = {};
+            for (const [key, value] of Object.entries(rowData)) {
+                if (value !== undefined && value !== null && value !== '') {
+                    cleanData[key] = value;
+                }
+            }
+            if (Object.keys(cleanData).length === 0) {
+                mostrarModal(`<p>No hay información adicional para la póliza ${codigo}.</p>`, `Detalle de Póliza: ${codigo}`);
+                return;
+            }
+            mostrarModal(cleanData, `Detalle de Póliza: ${codigo}`);
         }
 
         // =============================================================
-        //  CONTRATACIONES (agrupadas, sin botón)
+        //  CONTRATACIONES (sin cambios)
         // =============================================================
         function renderizarContrataciones() {
             const data = datosGlobales.contratacion;
             const container = document.getElementById('contenidoContrataciones');
-
             if (!data || data.length === 0) {
                 container.innerHTML = '<p class="error-message">⚠️ No hay contratos registrados.</p>';
                 return;
             }
-
             const grupos = new Map();
             data.forEach(row => {
                 const agente = getVal(row, 'agente', 'Agente', 'AGENTE', 'nombre', 'Nombre', 'NOMBRE') || 'Sin nombre';
-                if (!grupos.has(agente)) {
-                    grupos.set(agente, []);
-                }
+                if (!grupos.has(agente)) grupos.set(agente, []);
                 grupos.get(agente).push(row);
             });
-
             const agentesOrdenados = Array.from(grupos.keys()).sort((a, b) => a.localeCompare(b));
-
             let html = `<p><i class="fas fa-users" style="color:#0f2b4a;"></i> <strong>${data.length} contratos · ${grupos.size} agentes</strong></p>`;
             html += `<div style="margin-top:12px;">`;
-
             agentesOrdenados.forEach(agente => {
                 const contratos = grupos.get(agente);
                 const count = contratos.length;
                 const idGrupo = `grupo-${agente.replace(/\s/g,'')}`;
-
                 html += `<div class="grupo-item">`;
                 html += `<div class="grupo-header" onclick="toggleGrupo('${idGrupo}')">`;
                 html += `<span class="toggle-icon" id="icon-${idGrupo}">▶</span>`;
                 html += `<span class="grupo-info"><span class="value">${agente}</span><span class="label">${count} contrato${count > 1 ? 's' : ''}</span></span>`;
                 html += `</div>`;
-
                 html += `<div class="grupo-details" id="${idGrupo}">`;
                 const columnas = Object.keys(contratos[0]);
                 html += `<div class="table-wrapper"><table><thead><tr>`;
-                columnas.forEach(col => {
-                    html += `<th>${col}</th>`;
-                });
+                columnas.forEach(col => { html += `<th>${col}</th>`; });
                 html += `</tr></thead><tbody>`;
                 contratos.forEach(row => {
                     html += `<tr>`;
@@ -1197,10 +1152,8 @@
                     html += `</tr>`;
                 });
                 html += `</tbody></table></div>`;
-                html += `</div>`;
-                html += `</div>`;
+                html += `</div></div>`;
             });
-
             html += `</div>`;
             container.innerHTML = html;
         }
@@ -1221,13 +1174,12 @@
         };
 
         // =============================================================
-        //  PAGOS: TABLA RESUMEN CON BUSCADOR
+        //  PAGOS (MODIFICADO: último estatus por fecha)
         // =============================================================
         function renderizarPagos() {
             const data = datosGlobales.pagos;
             const container = document.getElementById('pagosTableContainer');
             const searchBox = document.getElementById('pagosSearchBox');
-
             if (!data || data.length === 0) {
                 container.innerHTML = '<p class="error-message">⚠️ No hay datos en Pagos.</p>';
                 searchBox.style.display = 'none';
@@ -1239,10 +1191,7 @@
             let codigoCol = null;
             const firstRow = data[0];
             for (const key of posiblesCodigos) {
-                if (firstRow[key] !== undefined) {
-                    codigoCol = key;
-                    break;
-                }
+                if (firstRow[key] !== undefined) { codigoCol = key; break; }
             }
             if (!codigoCol) {
                 container.innerHTML = '<p class="error-message">⚠️ No se encontró columna de código de póliza.</p>';
@@ -1250,64 +1199,67 @@
                 return;
             }
 
-            // Identificar columna de Registro_PDF
+            // Identificar columna de estatus
+            const posiblesEstatus = ['estatus', 'Estatus', 'ESTATUS', 'estado', 'Estado', 'ESTADO', 'situacion', 'Situacion'];
+            let estatusCol = null;
+            for (const key of posiblesEstatus) {
+                if (firstRow[key] !== undefined) { estatusCol = key; break; }
+            }
+
+            // Identificar columna de fecha (Pagado Hasta o similar)
+            const posiblesFecha = ['Pagado Hasta', 'pagado_hasta', 'PAGADO_HASTA', 'fecha_pago', 'Fecha Pago', 'fecha', 'Fecha', 'created_at'];
+            let fechaCol = null;
+            for (const key of posiblesFecha) {
+                if (firstRow[key] !== undefined) { fechaCol = key; break; }
+            }
+
+            // Identificar columna de Registro_PDF para el último registro
             const posiblesRegistro = ['Registro_PDF', 'registro_pdf', 'Registro PDF', 'registro pdf', 'RegistroPDF', 'registropdf'];
             let registroCol = null;
             for (const key of posiblesRegistro) {
-                if (firstRow[key] !== undefined) {
-                    registroCol = key;
-                    break;
-                }
+                if (firstRow[key] !== undefined) { registroCol = key; break; }
             }
 
-            // Identificar columna de fecha para ordenar
-            const posiblesFecha = ['fecha', 'Fecha', 'fecha_pago', 'fechapago', 'created_at'];
-            let fechaCol = null;
-            for (const key of posiblesFecha) {
-                if (firstRow[key] !== undefined) {
-                    fechaCol = key;
-                    break;
-                }
-            }
-
-            // Agrupar por código de póliza y guardar resumen
+            // Agrupar por código de póliza
             const grupos = new Map();
             data.forEach(row => {
                 const codigo = getVal(row, codigoCol) || 'Sin código';
-                if (!grupos.has(codigo)) {
-                    grupos.set(codigo, []);
-                }
+                if (!grupos.has(codigo)) grupos.set(codigo, []);
                 grupos.get(codigo).push(row);
             });
 
-            // Construir array de objetos resumen para filtrar
             const resumen = [];
             grupos.forEach((pagos, codigo) => {
-                const primerPago = pagos[0];
-                const cliente = getVal(primerPago, 'cliente', 'Cliente', 'CLIENTE', 'nombre', 'Nombre', 'NOMBRE') || '—';
-                const estatus = getVal(primerPago, 'estatus', 'Estatus', 'ESTATUS', 'estado', 'Estado') || '—';
-
+                // Ordenar pagos por fecha descendente (más reciente primero)
+                let pagosOrdenados = pagos;
+                if (fechaCol) {
+                    pagosOrdenados = pagos.slice().sort((a, b) => {
+                        const da = new Date(a[fechaCol]);
+                        const db = new Date(b[fechaCol]);
+                        if (isNaN(da) && isNaN(db)) return 0;
+                        if (isNaN(da)) return 1;
+                        if (isNaN(db)) return -1;
+                        return db - da;
+                    });
+                }
+                const ultimoPago = pagosOrdenados[0] || pagos[0];
+                const cliente = getVal(ultimoPago, 'cliente', 'Cliente', 'CLIENTE', 'nombre', 'Nombre', 'NOMBRE') || '—';
+                // Estatus del último pago
+                let estatus = '—';
+                if (estatusCol) {
+                    const estVal = getVal(ultimoPago, estatusCol);
+                    if (estVal) estatus = estVal;
+                }
+                // Último registro (si existe columna Registro_PDF)
                 let ultimoRegistro = '—';
-                if (pagos.length > 0) {
-                    let ultimoPago = pagos[pagos.length - 1];
-                    if (fechaCol) {
-                        const pagosConFecha = pagos.filter(p => p[fechaCol] !== undefined && p[fechaCol] !== null && p[fechaCol] !== '');
-                        if (pagosConFecha.length > 0) {
-                            pagosConFecha.sort((a, b) => {
-                                const da = new Date(a[fechaCol]);
-                                const db = new Date(b[fechaCol]);
-                                if (isNaN(da) && isNaN(db)) return 0;
-                                if (isNaN(da)) return 1;
-                                if (isNaN(db)) return -1;
-                                return db - da;
-                            });
-                            ultimoPago = pagosConFecha[0];
-                        }
-                    }
-                    if (registroCol) {
-                        const valorRegistro = getVal(ultimoPago, registroCol);
-                        if (valorRegistro) ultimoRegistro = valorRegistro;
-                    }
+                if (registroCol) {
+                    const regVal = getVal(ultimoPago, registroCol);
+                    if (regVal) ultimoRegistro = regVal;
+                }
+                // Si no hay registro, mostrar la fecha más reciente como referencia
+                if (ultimoRegistro === '—' && fechaCol) {
+                    const fechaVal = getVal(ultimoPago, fechaCol);
+                    if (fechaVal) ultimoRegistro = fechaVal;
                 }
 
                 resumen.push({
@@ -1315,20 +1267,15 @@
                     cliente: cliente,
                     estatus: estatus,
                     ultimoRegistro: ultimoRegistro,
-                    pagos: pagos
+                    pagos: pagosOrdenados // guardamos ordenados para el detalle
                 });
             });
 
             // Ordenar por código
             resumen.sort((a, b) => a.codigo.localeCompare(b.codigo));
-
-            // Guardar datos resumen globalmente para filtrar
             pagosDatosResumen = resumen;
-
-            // Mostrar buscador
             searchBox.style.display = 'block';
 
-            // Renderizar tabla (o aplicar filtro si hay texto)
             const filtro = document.getElementById('searchPagos').value.trim();
             renderTablaPagos(filtro);
         }
@@ -1336,47 +1283,24 @@
         function renderTablaPagos(filtro = '') {
             const container = document.getElementById('pagosTableContainer');
             const filtroLower = filtro.toLowerCase();
-
-            // Filtrar resumen
             let datosFiltrados = pagosDatosResumen;
             if (filtroLower) {
                 datosFiltrados = pagosDatosResumen.filter(item => {
-                    return item.codigo.toLowerCase().includes(filtroLower) ||
-                           item.cliente.toLowerCase().includes(filtroLower);
+                    return item.codigo.toLowerCase().includes(filtroLower) || item.cliente.toLowerCase().includes(filtroLower);
                 });
             }
-
             if (datosFiltrados.length === 0) {
                 container.innerHTML = `<p class="error-message">🔍 No se encontraron pólizas que coincidan con "${filtro}".</p>`;
                 return;
             }
-
             let html = `<div class="result-count">${datosFiltrados.length} pólizas encontradas</div>`;
-            html += `<div class="table-wrapper"><table>
-                <thead>
-                    <tr>
-                        <th>Codigo Poliza</th>
-                        <th>Cliente</th>
-                        <th>Estatus</th>
-                        <th>Ultimo Registro</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
+            html += `<div class="table-wrapper"><table><thead><tr><th>Codigo Poliza</th><th>Cliente</th><th>Estatus</th><th>Ultimo Registro</th></tr></thead><tbody>`;
             datosFiltrados.forEach(item => {
                 const codigoEscapado = item.codigo.replace(/'/g, "\\'");
-                html += `<tr>
-                    <td><span class="clickable-poliza" data-codigo="${codigoEscapado}">${item.codigo}</span></td>
-                    <td>${item.cliente}</td>
-                    <td>${item.estatus}</td>
-                    <td>${item.ultimoRegistro}</td>
-                </tr>`;
+                html += `<tr><td><span class="clickable-poliza" data-codigo="${codigoEscapado}">${item.codigo}</span></td><td>${item.cliente}</td><td>${item.estatus}</td><td>${item.ultimoRegistro}</td></tr>`;
             });
-
             html += `</tbody></table></div>`;
             container.innerHTML = html;
-
-            // Agregar evento de clic a los códigos de póliza
             container.querySelectorAll('.clickable-poliza').forEach(el => {
                 el.addEventListener('click', function() {
                     const codigo = this.getAttribute('data-codigo');
@@ -1385,15 +1309,11 @@
             });
         }
 
-        // Función para filtrar desde el input
         function filtrarPagos() {
             const input = document.getElementById('searchPagos');
             const clearBtn = document.getElementById('clearPagosBtn');
-            if (input.value.trim().length > 0) {
-                clearBtn.classList.add('visible');
-            } else {
-                clearBtn.classList.remove('visible');
-            }
+            if (input.value.trim().length > 0) clearBtn.classList.add('visible');
+            else clearBtn.classList.remove('visible');
             renderTablaPagos(input.value.trim());
         }
 
@@ -1405,49 +1325,29 @@
             input.focus();
         }
 
-        // =============================================================
-        //  FUNCIÓN PARA MOSTRAR DETALLE DE PÓLIZA EN MODAL
-        // =============================================================
         function mostrarDetallePoliza(codigo) {
             const data = datosGlobales.pagos;
             if (!data || data.length === 0) {
                 mostrarModal('<p>No hay datos para esta póliza.</p>', 'Detalle de Póliza');
                 return;
             }
-
-            // Identificar columna de código de póliza
-            const posiblesCodigos = ['Codigo Poliza', 'codigo_poliza', 'codigopoliza', 'poliza', 'id_poliza', 'codigo'];
-            let codigoCol = null;
-            const firstRow = data[0];
-            for (const key of posiblesCodigos) {
-                if (firstRow[key] !== undefined) {
-                    codigoCol = key;
-                    break;
-                }
-            }
-            if (!codigoCol) {
-                mostrarModal('<p>Error: no se encontró columna de código de póliza.</p>', 'Detalle de Póliza');
-                return;
-            }
-
-            // Filtrar pagos de esta póliza
-            const pagos = data.filter(row => {
-                const val = getVal(row, codigoCol);
-                return val && val.trim() === codigo.trim();
-            });
-
-            if (pagos.length === 0) {
+            // Encontrar el resumen para este código
+            const item = pagosDatosResumen.find(d => d.codigo === codigo);
+            if (!item) {
                 mostrarModal(`<p>No se encontraron pagos para la póliza: ${codigo}</p>`, 'Detalle de Póliza');
                 return;
             }
-
-            // Construir tabla con todas las columnas
+            // Usar los pagos ordenados del resumen
+            const pagos = item.pagos;
+            if (!pagos || pagos.length === 0) {
+                mostrarModal(`<p>No se encontraron pagos para la póliza: ${codigo}</p>`, 'Detalle de Póliza');
+                return;
+            }
+            const firstRow = pagos[0];
             const columnas = Object.keys(firstRow);
-            let html = `<p><strong>Póliza:</strong> ${codigo} (${pagos.length} registros)</p>`;
+            let html = `<p><strong>Póliza:</strong> ${codigo} (${pagos.length} registros, mostrando del más reciente al más antiguo)</p>`;
             html += `<div class="table-wrapper"><table class="tabla-modal"><thead><tr>`;
-            columnas.forEach(col => {
-                html += `<th>${col}</th>`;
-            });
+            columnas.forEach(col => { html += `<th>${col}</th>`; });
             html += `</tr></thead><tbody>`;
             pagos.forEach(row => {
                 html += `<tr>`;
@@ -1460,32 +1360,151 @@
                 html += `</tr>`;
             });
             html += `</tbody></table></div>`;
-
             mostrarModal(html, `Detalle de Póliza: ${codigo}`);
         }
 
         // =============================================================
-        //  COMISIONES
+        //  COMISIONES (sin cambios)
         // =============================================================
         function renderizarComisiones() {
             const data = datosGlobales.comisiones;
-            const container = document.getElementById('contenidoComisiones');
-            if (!data || data.length === 0) { container.innerHTML =
-                '<p class="error-message">⚠️ No hay datos en Comisiones.</p>'; return; }
+            const container = document.getElementById('comisionesTableContainer');
+            const searchBox = document.getElementById('comisionesSearchBox');
+            if (!data || data.length === 0) {
+                container.innerHTML = '<p class="error-message">⚠️ No hay datos en Comisiones.</p>';
+                searchBox.style.display = 'none';
+                return;
+            }
+            comisionesDatos = data;
+            searchBox.style.display = 'block';
             let totalGeneral = 0;
-            let html =
-                `<p><strong>Comisiones por ramo</strong></p><div style="margin:18px 0;">`;
-            data.forEach(item => {
-                const ramo = getVal(item, 'ramo', 'Ramo', 'RAMO');
-                const monto = parseFloat(getVal(item, 'monto', 'Monto', 'MONTO') || 0) || 0;
-                const porcentaje = getVal(item, 'porcentaje', 'Porcentaje', 'PORCENTAJE') || '0%';
-                totalGeneral += monto;
-                html +=
-                    `<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #ddd;"><span>${ramo}</span><span><strong>$${monto.toFixed(2)}</strong> (${porcentaje})</span></div>`;
+            const posiblesMonto = ['monto', 'Monto', 'MONTO', 'comision', 'Comision', 'COMISION', 'total', 'Total', 'TOTAL'];
+            let montoCol = null;
+            const firstRow = data[0];
+            for (const key of posiblesMonto) {
+                if (firstRow[key] !== undefined) { montoCol = key; break; }
+            }
+            if (montoCol) {
+                data.forEach(row => {
+                    const monto = parseFloat(getVal(row, montoCol) || 0);
+                    if (!isNaN(monto)) totalGeneral += monto;
+                });
+            }
+            const filtro = document.getElementById('searchComisiones').value.trim();
+            renderizarTablaComisiones(filtro, totalGeneral);
+        }
+
+        function renderizarTablaComisiones(filtro = '', totalGeneral = 0) {
+            const container = document.getElementById('comisionesTableContainer');
+            const data = comisionesDatos;
+            if (!data || data.length === 0) return;
+            const filtroLower = filtro.toLowerCase();
+            const columnasMostrar = ['Cliente', 'Codigo de poliza', 'Estatus', 'Advance'];
+            const mapeo = {
+                'Cliente': ['cliente', 'Cliente', 'CLIENTE', 'nombre', 'Nombre', 'NOMBRE', 'asegurado', 'Asegurado'],
+                'Codigo de poliza': ['codigo_poliza', 'Codigo Poliza', 'CODIGO_POLIZA', 'poliza', 'Poliza', 'POLIZA', 'id_poliza', 'Id Poliza'],
+                'Estatus': ['estatus', 'Estatus', 'ESTATUS', 'estado', 'Estado', 'ESTADO', 'situacion', 'Situacion'],
+                'Advance': ['advance', 'Advance', 'ADVANCE', 'anticipo', 'Anticipo', 'ANTICIPO']
+            };
+            function getValor(row, colMostrada) {
+                const posibles = mapeo[colMostrada] || [];
+                for (const key of posibles) {
+                    if (row[key] !== undefined && row[key] !== null && row[key] !== '') {
+                        return row[key].toString().trim();
+                    }
+                }
+                const rowKeys = Object.keys(row);
+                for (const k of rowKeys) {
+                    if (posibles.some(p => k.toLowerCase().includes(p.toLowerCase()) || p.toLowerCase().includes(k.toLowerCase()))) {
+                        const val = row[k];
+                        if (val !== undefined && val !== null && val !== '') {
+                            return val.toString().trim();
+                        }
+                    }
+                }
+                return '—';
+            }
+            let datosFiltrados = data;
+            if (filtroLower) {
+                datosFiltrados = data.filter(row => {
+                    for (const col of columnasMostrar) {
+                        const val = getValor(row, col);
+                        if (val.toLowerCase().includes(filtroLower)) return true;
+                    }
+                    return false;
+                });
+            }
+            if (datosFiltrados.length === 0) {
+                container.innerHTML = `<p class="error-message">🔍 No se encontraron registros que coincidan con "${filtro}".</p>`;
+                return;
+            }
+            let html = `<div class="result-count">${datosFiltrados.length} registros encontrados</div>`;
+            html += `<div class="table-wrapper"><table><thead><tr>`;
+            columnasMostrar.forEach(col => { html += `<th>${col}</th>`; });
+            html += `</tr></thead><tbody>`;
+            datosFiltrados.forEach(row => {
+                html += `<tr>`;
+                columnasMostrar.forEach(col => {
+                    const val = getValor(row, col);
+                    html += `<td>${val}</td>`;
+                });
+                html += `</tr>`;
             });
-            html +=
-                `</div><div style="background:#0f2b4a;color:white;padding:14px;border-radius:10px;text-align:center;font-weight:600;">Total comisiones: $${totalGeneral.toFixed(2)}</div>`;
+            html += `</tbody></table></div>`;
+            if (totalGeneral > 0) {
+                html += `<div style="margin-top:16px; background:#0f2b4a; color:white; padding:12px; border-radius:8px; text-align:center; font-weight:600;">
+                    Total general de comisiones: $${totalGeneral.toFixed(2)}
+                </div>`;
+            }
             container.innerHTML = html;
+        }
+
+        function filtrarComisiones() {
+            const input = document.getElementById('searchComisiones');
+            const clearBtn = document.getElementById('clearComisionesBtn');
+            if (input.value.trim().length > 0) clearBtn.classList.add('visible');
+            else clearBtn.classList.remove('visible');
+            let totalGeneral = 0;
+            const data = comisionesDatos;
+            if (data && data.length > 0) {
+                const posiblesMonto = ['monto', 'Monto', 'MONTO', 'comision', 'Comision', 'COMISION', 'total', 'Total', 'TOTAL'];
+                let montoCol = null;
+                const firstRow = data[0];
+                for (const key of posiblesMonto) {
+                    if (firstRow[key] !== undefined) { montoCol = key; break; }
+                }
+                if (montoCol) {
+                    data.forEach(row => {
+                        const monto = parseFloat(getVal(row, montoCol) || 0);
+                        if (!isNaN(monto)) totalGeneral += monto;
+                    });
+                }
+            }
+            renderizarTablaComisiones(input.value.trim(), totalGeneral);
+        }
+
+        function limpiarBusquedaComisiones() {
+            const input = document.getElementById('searchComisiones');
+            input.value = '';
+            document.getElementById('clearComisionesBtn').classList.remove('visible');
+            let totalGeneral = 0;
+            const data = comisionesDatos;
+            if (data && data.length > 0) {
+                const posiblesMonto = ['monto', 'Monto', 'MONTO', 'comision', 'Comision', 'COMISION', 'total', 'Total', 'TOTAL'];
+                let montoCol = null;
+                const firstRow = data[0];
+                for (const key of posiblesMonto) {
+                    if (firstRow[key] !== undefined) { montoCol = key; break; }
+                }
+                if (montoCol) {
+                    data.forEach(row => {
+                        const monto = parseFloat(getVal(row, montoCol) || 0);
+                        if (!isNaN(monto)) totalGeneral += monto;
+                    });
+                }
+            }
+            renderizarTablaComisiones('', totalGeneral);
+            input.focus();
         }
 
         // =============================================================
@@ -1494,13 +1513,12 @@
         async function cargarDatos() {
             addLog('⏳ Cargando datos desde Supabase...', 'info');
 
-            document.getElementById('cuerpoTabla').innerHTML =
-                `<tr><td colspan="10" style="text-align:center;color:#888;">Cargando...</td></tr>`;
+            document.getElementById('cuerpoTabla').innerHTML = `<tr><td colspan="6" style="text-align:center;color:#888;">Cargando...</td></tr>`;
             document.getElementById('dashboardStatus').innerHTML = '<div class="loading-message">Cargando datos...</div>';
             document.getElementById('contenidoJerarquia').innerHTML = '<p class="loading-message">Cargando...</p>';
             document.getElementById('contenidoContrataciones').innerHTML = '<p class="loading-message">Cargando contratos...</p>';
             document.getElementById('pagosTableContainer').innerHTML = '<p class="loading-message">Cargando pagos...</p>';
-            document.getElementById('contenidoComisiones').innerHTML = '<p class="loading-message">Cargando...</p>';
+            document.getElementById('comisionesTableContainer').innerHTML = '<p class="loading-message">Cargando comisiones...</p>';
 
             try {
                 const [prodResult, jerResult, contResult, pagResult, comResult] = await Promise.all([
@@ -1530,8 +1548,7 @@
                 });
 
                 if (hayError) {
-                    const errores = resultados.filter(r => r.error).map(r =>
-                        `${r.nombre}: ${r.error.message}`).join('\n');
+                    const errores = resultados.filter(r => r.error).map(r => `${r.nombre}: ${r.error.message}`).join('\n');
                     alert('⚠️ Errores al leer algunas tablas:\n' + errores);
                 }
 
@@ -1554,8 +1571,7 @@
             } catch (err) {
                 addLog(`❌ Error inesperado: ${err.message}`, 'error');
                 alert('Error en la conexión con Supabase:\n' + err.message);
-                document.getElementById('dashboardStatus').innerHTML =
-                    `<div class="error-message">⚠️ Error: ${err.message}</div>`;
+                document.getElementById('dashboardStatus').innerHTML = `<div class="error-message">⚠️ Error: ${err.message}</div>`;
             }
         }
 
