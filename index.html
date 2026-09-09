@@ -5,558 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Control de Producción - Seguros</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
-    </script>
-    <!-- Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         /* ===== ESTILOS BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background: #f4f7fc;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .header {
-            background: #0f2b4a;
-            color: white;
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-shrink: 0;
-            gap: 8px;
-        }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 0;
-        }
-        .header-left .logo-img {
-            height: 48px;
-            width: auto;
-            max-width: 120px;
-            object-fit: contain;
-            border-radius: 4px;
-        }
-        .logo-text-group {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
-            white-space: nowrap;
-        }
-        .logo-line1 {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 0.9rem;
-            font-weight: 400;
-            letter-spacing: 1px;
-            color: #fff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            text-transform: uppercase;
-        }
-        .logo-line2 {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 0.7rem;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-            color: #fff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            text-transform: uppercase;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-shrink: 0;
-        }
-        .header-right .reload-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: transform 0.3s;
-            padding: 4px 8px;
-            border-radius: 6px;
-            touch-action: manipulation;
-        }
-        .header-right .reload-btn:hover {
-            transform: rotate(180deg);
-            background: rgba(255,255,255,0.15);
-        }
-        .header-right .reload-btn i {
-            font-size: 1.4rem;
-        }
-        .insurance-logo {
-            height: 40px;
-            width: auto;
-            max-width: 100px;
-            object-fit: contain;
-            border-radius: 4px;
-            background: rgba(255,255,255,0.05);
-            padding: 2px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f4f7fc; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .header { background: #0f2b4a; color: white; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 8px; }
+        .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .header-left .logo-img { height: 48px; width: auto; max-width: 120px; object-fit: contain; border-radius: 4px; }
+        .logo-text-group { display: flex; flex-direction: column; line-height: 1.2; white-space: nowrap; }
+        .logo-line1 { font-family: 'Georgia', 'Times New Roman', serif; font-size: 0.9rem; font-weight: 400; letter-spacing: 1px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.2); text-transform: uppercase; }
+        .logo-line2 { font-family: 'Georgia', 'Times New Roman', serif; font-size: 0.7rem; font-weight: 300; letter-spacing: 0.5px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.2); text-transform: uppercase; }
+        .header-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+        .header-right .reload-btn { background: transparent; border: none; color: white; font-size: 1.2rem; cursor: pointer; transition: transform 0.3s; padding: 4px 8px; border-radius: 6px; touch-action: manipulation; }
+        .header-right .reload-btn:hover { transform: rotate(180deg); background: rgba(255,255,255,0.15); }
+        .header-right .reload-btn i { font-size: 1.4rem; }
+        .insurance-logo { height: 40px; width: auto; max-width: 100px; object-fit: contain; border-radius: 4px; background: rgba(255,255,255,0.05); padding: 2px; }
 
-        .main-content {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 20px 24px;
-            padding-bottom: 90px;
-            -webkit-overflow-scrolling: touch;
-        }
-        .page {
-            display: none;
-            animation: fadeIn 0.25s ease;
-        }
-        .page.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 18px;
-            margin-top: 18px;
-        }
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            text-align: center;
-            border-top: 5px solid #0f2b4a;
-            overflow: hidden;
-        }
-        .card .number {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #0f2b4a;
-            word-break: break-word;
-            line-height: 1.2;
-        }
-        .card .label {
-            color: #666;
-            font-size: 0.85rem;
-            margin-top: 4px;
-        }
-        .card i {
-            font-size: 1.4rem;
-            color: #0f2b4a;
-            display: block;
-            margin-bottom: 4px;
-        }
-        .section-title {
-            font-size: 1.6rem;
-            font-weight: 300;
-            color: #0f2b4a;
-            margin-bottom: 14px;
-        }
-        .section-content {
-            background: white;
-            border-radius: 12px;
-            padding: 22px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .badge {
-            background: #eef2f7;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #0f2b4a;
-        }
-        .btn-primary {
-            background: #0f2b4a;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            touch-action: manipulation;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-            font-size: 0.9rem;
-        }
-        th {
-            background: #eef2f7;
-            padding: 10px;
-            text-align: left;
-            font-weight: 600;
-            color: #0f2b4a;
-            white-space: nowrap;
-        }
-        td {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            word-break: break-word;
-        }
-        .table-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            height: 72px;
-            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
-            border-top: 1px solid #e9ecf0;
-            z-index: 100;
-            gap: 0;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex: 1 1 0;
-            height: 100%;
-            color: #8892a8;
-            font-size: 0.65rem;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            padding: 0 2px;
-            text-align: center;
-            touch-action: manipulation;
-            min-width: 0;
-        }
-        .nav-item i {
-            font-size: 1.4rem;
-            margin-bottom: 2px;
-        }
-        .nav-item span {
-            white-space: nowrap;
-            font-size: 0.6rem;
-        }
-        .nav-item.active {
-            color: #0f2b4a;
-        }
-        .nav-item.active i {
-            transform: translateY(-2px);
-            color: #0f2b4a;
-        }
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border: 1px solid #f5c6cb;
-        }
-        .loading-message {
-            background: #d1ecf1;
-            color: #0c5460;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border: 1px solid #bee5eb;
-        }
+        .main-content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 20px 24px; padding-bottom: 90px; -webkit-overflow-scrolling: touch; }
+        .page { display: none; animation: fadeIn 0.25s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        .hierarchy-list {
-            list-style: none;
-            padding-left: 0;
-            margin: 0;
-        }
-        .hierarchy-list li {
-            padding: 4px 0;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            font-size: 0.9rem;
-        }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px; margin-top: 18px; }
+        .card { background: white; border-radius: 12px; padding: 20px 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center; border-top: 5px solid #0f2b4a; overflow: hidden; }
+        .card .number { font-size: 1.6rem; font-weight: 700; color: #0f2b4a; word-break: break-word; line-height: 1.2; }
+        .card .label { color: #666; font-size: 0.85rem; margin-top: 4px; }
+        .card i { font-size: 1.4rem; color: #0f2b4a; display: block; margin-bottom: 4px; }
+
+        .section-title { font-size: 1.6rem; font-weight: 300; color: #0f2b4a; margin-bottom: 14px; }
+        .section-content { background: white; border-radius: 12px; padding: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .badge { background: #eef2f7; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: #0f2b4a; }
+        .btn-primary { background: #0f2b4a; color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; touch-action: manipulation; }
+
+        /* ===== TABLAS: CENTRADO POR DEFECTO, EXCEPTO NOMBRES ===== */
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.9rem; }
+        th, td { text-align: center; padding: 10px; border-bottom: 1px solid #eee; word-break: break-word; }
+        th { background: #eef2f7; font-weight: 600; color: #0f2b4a; white-space: nowrap; }
+        .agente-cell { text-align: left; }
+
+        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; align-items: center; height: 72px; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); border-top: 1px solid #e9ecf0; z-index: 100; gap: 0; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1 1 0; height: 100%; color: #8892a8; font-size: 0.65rem; cursor: pointer; border: none; background: transparent; padding: 0 2px; text-align: center; touch-action: manipulation; min-width: 0; }
+        .nav-item i { font-size: 1.4rem; margin-bottom: 2px; }
+        .nav-item span { white-space: nowrap; font-size: 0.6rem; }
+        .nav-item.active { color: #0f2b4a; }
+        .nav-item.active i { transform: translateY(-2px); color: #0f2b4a; }
+
+        .error-message { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin: 10px 0; border: 1px solid #f5c6cb; }
+        .loading-message { background: #d1ecf1; color: #0c5460; padding: 15px; border-radius: 8px; margin: 10px 0; border: 1px solid #bee5eb; }
+
+        .hierarchy-list { list-style: none; padding-left: 0; margin: 0; }
+        .hierarchy-list li { padding: 4px 0; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; flex-wrap: wrap; font-size: 0.9rem; }
         .hierarchy-list li:last-child { border-bottom: none; }
-        .hierarchy-list .toggle-btn {
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            color: #0f2b4a;
-            font-size: 0.9rem;
-            width: 24px;
-            text-align: center;
-            padding: 0;
-            margin-right: 6px;
-            transition: transform 0.2s;
-            flex-shrink: 0;
-        }
+        .hierarchy-list .toggle-btn { cursor: pointer; background: transparent; border: none; color: #0f2b4a; font-size: 0.9rem; width: 24px; text-align: center; padding: 0; margin-right: 6px; transition: transform 0.2s; flex-shrink: 0; }
         .hierarchy-list .toggle-btn:hover { color: #ffc107; }
-        .hierarchy-list .node-label {
-            flex: 1;
-            cursor: pointer;
-            padding: 4px 0;
-            border-radius: 4px;
-            transition: background 0.2s;
-            font-size: 0.9rem;
-        }
+        .hierarchy-list .node-label { flex: 1; cursor: pointer; padding: 4px 0; border-radius: 4px; transition: background 0.2s; font-size: 0.9rem; }
         .hierarchy-list .node-label:hover { background: #eef2f7; }
-        .hierarchy-list .children-container {
-            padding-left: 24px;
-            width: 100%;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
+        .hierarchy-list .children-container { padding-left: 24px; width: 100%; overflow: hidden; transition: max-height 0.3s ease; }
         .hierarchy-list .children-container.collapsed { display: none; }
         .hierarchy-list .children-container.expanded { display: block; }
 
-        .search-box {
-            position: relative;
-            margin-bottom: 16px;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 10px 40px 10px 16px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-            transition: border 0.2s, box-shadow 0.2s;
-        }
-        .search-box input:focus {
-            border-color: #0f2b4a;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(15,43,74,0.2);
-        }
-        .search-box .clear-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: white;
-            border: none;
-            font-size: 1.1rem;
-            color: #aaa;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 50%;
-            transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s;
-            opacity: 0;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-        }
-        .search-box .clear-btn:hover {
-            background: #eef2f7;
-            color: #0f2b4a;
-        }
-        .search-box .clear-btn.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .search-box { position: relative; margin-bottom: 16px; }
+        .search-box input { width: 100%; padding: 10px 40px 10px 16px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; transition: border 0.2s, box-shadow 0.2s; }
+        .search-box input:focus { border-color: #0f2b4a; outline: none; box-shadow: 0 0 0 3px rgba(15,43,74,0.2); }
+        .search-box .clear-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: white; border: none; font-size: 1.1rem; color: #aaa; cursor: pointer; padding: 4px 8px; border-radius: 50%; transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s; opacity: 0; pointer-events: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; }
+        .search-box .clear-btn:hover { background: #eef2f7; color: #0f2b4a; }
+        .search-box .clear-btn.visible { opacity: 1; pointer-events: auto; }
         .search-box .clear-btn i { font-size: 0.9rem; }
 
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            animation: fadeIn 0.2s;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 999; animation: fadeIn 0.2s; }
         .modal-overlay.hidden { display: none; }
-        .modal-box {
-            background: white;
-            border-radius: 16px;
-            padding: 30px 28px;
-            max-width: 750px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            position: relative;
-        }
-        .modal-box h3 {
-            color: #0f2b4a;
-            margin-bottom: 16px;
-            border-bottom: 2px solid #eef2f7;
-            padding-bottom: 12px;
-            padding-right: 30px;
-        }
-        .modal-box .close-btn {
-            position: absolute;
-            top: 12px;
-            right: 18px;
-            font-size: 1.6rem;
-            cursor: pointer;
-            color: #8892a8;
-            background: none;
-            border: none;
-        }
+        .modal-box { background: white; border-radius: 16px; padding: 30px 28px; max-width: 750px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative; }
+        .modal-box h3 { color: #0f2b4a; margin-bottom: 16px; border-bottom: 2px solid #eef2f7; padding-bottom: 12px; padding-right: 30px; }
+        .modal-box .close-btn { position: absolute; top: 12px; right: 18px; font-size: 1.6rem; cursor: pointer; color: #8892a8; background: none; border: none; }
         .modal-box .close-btn:hover { color: #0f2b4a; }
-        .modal-box .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
+        .modal-box .info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
         .modal-box .info-row:last-child { border-bottom: none; }
-        .modal-box .info-label {
-            font-weight: 600;
-            color: #555;
-        }
-        .modal-box .info-value {
-            color: #0f2b4a;
-            word-break: break-word;
-            text-align: right;
-            max-width: 60%;
-        }
-        .modal-box .tabla-modal {
-            font-size: 0.85rem;
-            margin-top: 8px;
-            width: 100%;
-        }
-        .modal-box .tabla-modal th {
-            background: #f4f7fc;
-            font-size: 0.8rem;
-            padding: 6px 10px;
-            white-space: nowrap;
-        }
-        .modal-box .tabla-modal td {
-            padding: 6px 10px;
-            border-bottom: 1px solid #f0f0f0;
-        }
+        .modal-box .info-label { font-weight: 600; color: #555; }
+        .modal-box .info-value { color: #0f2b4a; word-break: break-word; text-align: right; max-width: 60%; }
+        .modal-box .tabla-modal { font-size: 0.85rem; margin-top: 8px; width: 100%; }
+        .modal-box .tabla-modal th { background: #f4f7fc; font-size: 0.8rem; padding: 6px 10px; white-space: nowrap; }
+        .modal-box .tabla-modal td { padding: 6px 10px; border-bottom: 1px solid #f0f0f0; }
         .modal-box .tabla-modal tr:last-child td { border-bottom: none; }
-        .modal-box .tabla-modal td:first-child {
-            font-weight: 600;
-            color: #0f2b4a;
-            width: 35%;
-        }
-        .node-icon {
-            margin-right: 8px;
-            color: #0f2b4a;
-            width: 20px;
-            text-align: center;
-        }
+        .modal-box .tabla-modal td:first-child { font-weight: 600; color: #0f2b4a; width: 35%; }
+
+        .node-icon { margin-right: 8px; color: #0f2b4a; width: 20px; text-align: center; }
 
         .grupo-item { border-bottom: 1px solid #eee; }
         .grupo-item:last-child { border-bottom: none; }
-        .grupo-header {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            cursor: pointer;
-            transition: background 0.2s;
-            flex-wrap: wrap;
-        }
+        .grupo-header { display: flex; align-items: center; padding: 8px 0; cursor: pointer; transition: background 0.2s; flex-wrap: wrap; }
         .grupo-header:hover { background: #f8faff; }
-        .grupo-header .toggle-icon {
-            width: 24px;
-            text-align: center;
-            color: #0f2b4a;
-            font-size: 0.9rem;
-            transition: transform 0.2s;
-        }
+        .grupo-header .toggle-icon { width: 24px; text-align: center; color: #0f2b4a; font-size: 0.9rem; transition: transform 0.2s; }
         .grupo-header .toggle-icon.expanded { transform: rotate(90deg); }
-        .grupo-header .grupo-info {
-            flex: 1;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px 24px;
-            margin-left: 8px;
-        }
+        .grupo-header .grupo-info { flex: 1; display: flex; flex-wrap: wrap; gap: 12px 24px; margin-left: 8px; }
         .grupo-header .grupo-info span { font-size: 0.9rem; }
-        .grupo-header .grupo-info .label {
-            color: #666;
-            font-weight: normal;
-        }
-        .grupo-header .grupo-info .value {
-            font-weight: 600;
-            color: #0f2b4a;
-        }
-        .grupo-details {
-            padding-left: 32px;
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.4s ease;
-        }
+        .grupo-header .grupo-info .label { color: #666; font-weight: normal; }
+        .grupo-header .grupo-info .value { font-weight: 600; color: #0f2b4a; }
+        .grupo-details { padding-left: 32px; overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
         .grupo-details.open { max-height: 2000px; }
-        .grupo-details table {
-            margin: 8px 0 16px 0;
-            font-size: 0.85rem;
-            border: 1px solid #eef2f7;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .grupo-details table th {
-            background: #f4f7fc;
-            font-size: 0.8rem;
-            padding: 6px 10px;
-            white-space: nowrap;
-        }
-        .grupo-details table td {
-            padding: 6px 10px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .grupo-details table tr:last-child td { border-bottom: none; }
+        .grupo-details table { margin: 8px 0 16px 0; font-size: 0.85rem; border: 1px solid #eef2f7; border-radius: 8px; overflow: hidden; }
+        .grupo-details table th { background: #f4f7fc; font-size: 0.8rem; padding: 6px 10px; white-space: nowrap; }
+        .grupo-details table td { padding: 6px 10px; border-bottom: 1px solid #f0f0f0; }
 
-        .clickable-poliza {
-            cursor: pointer;
-            color: #0f2b4a;
-            font-weight: 600;
-            transition: color 0.2s;
-        }
-        .clickable-poliza:hover {
-            color: #ffc107;
-            text-decoration: underline;
-        }
-        .result-count {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 8px;
-        }
+        .clickable-poliza { cursor: pointer; color: #0f2b4a; font-weight: 600; transition: color 0.2s; }
+        .clickable-poliza:hover { color: #ffc107; text-decoration: underline; }
+        .result-count { font-size: 0.85rem; color: #666; margin-bottom: 8px; }
 
-        .modal-box .detalle-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 8px 16px;
-            padding: 4px 0;
-        }
-        .modal-box .detalle-grid .label {
-            font-weight: 600;
-            color: #555;
-        }
-        .modal-box .detalle-grid .value {
-            color: #0f2b4a;
-            word-break: break-word;
-        }
-        .modal-box .detalle-grid .value a {
-            color: #0f2b4a;
-            text-decoration: underline;
-        }
+        .modal-box .detalle-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 8px 16px; padding: 4px 0; }
+        .modal-box .detalle-grid .label { font-weight: 600; color: #555; }
+        .modal-box .detalle-grid .value { color: #0f2b4a; word-break: break-word; }
 
         .estatus-activa { color: #28a745; font-weight: 600; }
         .estatus-terminada { color: #dc3545; font-weight: 600; }
@@ -567,425 +129,104 @@
         .comision-pagada { color: #28a745; font-size: 1.2rem; }
         .comision-no-pagada { color: #aaa; font-size: 1.2rem; }
 
-        .filtro-botones {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 16px;
-            align-items: center;
-        }
-        .filtro-botones .label {
-            font-weight: 600;
-            color: #0f2b4a;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            margin-right: 8px;
-        }
-        .filtro-botones .btn-filtro {
-            background: #eef2f7;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #0f2b4a;
-            cursor: pointer;
-            transition: all 0.2s;
-            touch-action: manipulation;
-        }
-        .filtro-botones .btn-filtro:hover {
-            background: #d4dce8;
-        }
-        .filtro-botones .btn-filtro.active {
-            background: #0f2b4a;
-            color: white;
-        }
-        .filtro-botones .btn-filtro.active:hover {
-            background: #1a3f64;
-        }
+        .filtro-botones { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+        .filtro-botones .label { font-weight: 600; color: #0f2b4a; font-size: 0.9rem; white-space: nowrap; margin-right: 8px; }
+        .filtro-botones .btn-filtro { background: #eef2f7; border: none; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: #0f2b4a; cursor: pointer; transition: all 0.2s; touch-action: manipulation; }
+        .filtro-botones .btn-filtro:hover { background: #d4dce8; }
+        .filtro-botones .btn-filtro.active { background: #0f2b4a; color: white; }
+        .filtro-botones .btn-filtro.active:hover { background: #1a3f64; }
 
-        .filtro-fechas {
-            background: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 12px 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
-        .filtro-fechas .fecha-inputs {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px 16px;
-            flex: 1;
-        }
-        .filtro-fechas .fecha-inputs .rango-label {
-            font-size: 0.9rem;
-            color: #333;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .filtro-fechas .fecha-inputs .rango-label i {
-            color: #0f2b4a;
-        }
-        .filtro-fechas .fecha-inputs .rango-input {
-            flex: 1;
-            min-width: 200px;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 0.9rem;
-            background: #fafafa;
-            cursor: pointer;
-            transition: border 0.2s, box-shadow 0.2s;
-        }
-        .filtro-fechas .fecha-inputs .rango-input:hover {
-            border-color: #0f2b4a;
-        }
-        .filtro-fechas .fecha-inputs .rango-input:focus {
-            border-color: #0f2b4a;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(15,43,74,0.2);
-        }
-        .filtro-fechas .fecha-inputs .rango-input::placeholder {
-            color: #aaa;
-        }
-        .filtro-fechas .acciones {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-        }
-        .filtro-fechas .acciones .btn-primary {
-            padding: 6px 16px;
-            font-size: 0.9rem;
-        }
-        .filtro-fechas .acciones .btn-secundario {
-            background: #eef2f7;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            color: #0f2b4a;
-            font-weight: 600;
-            transition: background 0.2s;
-            touch-action: manipulation;
-        }
-        .filtro-fechas .acciones .btn-secundario:hover {
-            background: #d4dce8;
-        }
-        .flatpickr-calendar {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            border-radius: 12px !important;
-            border: none !important;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .flatpickr-calendar .flatpickr-months {
-            background: #0f2b4a;
-            border-radius: 12px 12px 0 0;
-            padding: 8px 0;
-        }
+        .filtro-fechas { background: white; padding: 12px 16px; border-radius: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .filtro-fechas .fecha-inputs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; flex: 1; }
+        .filtro-fechas .fecha-inputs .rango-label { font-size: 0.9rem; color: #333; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+        .filtro-fechas .fecha-inputs .rango-label i { color: #0f2b4a; }
+        .filtro-fechas .fecha-inputs .rango-input { flex: 1; min-width: 200px; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.9rem; background: #fafafa; cursor: pointer; transition: border 0.2s, box-shadow 0.2s; }
+        .filtro-fechas .fecha-inputs .rango-input:hover { border-color: #0f2b4a; }
+        .filtro-fechas .fecha-inputs .rango-input:focus { border-color: #0f2b4a; outline: none; box-shadow: 0 0 0 3px rgba(15,43,74,0.2); }
+        .filtro-fechas .fecha-inputs .rango-input::placeholder { color: #aaa; }
+        .filtro-fechas .acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .filtro-fechas .acciones .btn-primary { padding: 6px 16px; font-size: 0.9rem; }
+        .filtro-fechas .acciones .btn-secundario { background: #eef2f7; border: none; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; color: #0f2b4a; font-weight: 600; transition: background 0.2s; touch-action: manipulation; }
+        .filtro-fechas .acciones .btn-secundario:hover { background: #d4dce8; }
+
+        .flatpickr-calendar { box-shadow: 0 8px 24px rgba(0,0,0,0.15); border-radius: 12px !important; border: none !important; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .flatpickr-calendar .flatpickr-months { background: #0f2b4a; border-radius: 12px 12px 0 0; padding: 8px 0; }
         .flatpickr-calendar .flatpickr-months .flatpickr-prev-month,
-        .flatpickr-calendar .flatpickr-months .flatpickr-next-month {
-            fill: white !important;
-            color: white !important;
-        }
-        .flatpickr-calendar .flatpickr-months .flatpickr-month {
-            color: white !important;
-            fill: white !important;
-        }
-        .flatpickr-calendar .flatpickr-current-month {
-            color: white !important;
-            font-size: 1.1rem !important;
-        }
-        .flatpickr-calendar .flatpickr-current-month .numInputWrapper span {
-            color: white !important;
-        }
-        .flatpickr-calendar .flatpickr-weekdays {
-            background: #f4f7fc;
-            border-radius: 0;
-        }
-        .flatpickr-calendar .flatpickr-weekday {
-            color: #0f2b4a !important;
-            font-weight: 700 !important;
-        }
-        .flatpickr-calendar .flatpickr-day {
-            border-radius: 6px;
-            transition: background 0.2s, color 0.2s;
-        }
-        .flatpickr-calendar .flatpickr-day:hover {
-            background: #eef2f7;
-        }
-        .flatpickr-calendar .flatpickr-day.selected {
-            background: #0f2b4a !important;
-            border-color: #0f2b4a !important;
-            color: white !important;
-        }
+        .flatpickr-calendar .flatpickr-months .flatpickr-next-month { fill: white !important; color: white !important; }
+        .flatpickr-calendar .flatpickr-months .flatpickr-month { color: white !important; fill: white !important; }
+        .flatpickr-calendar .flatpickr-current-month { color: white !important; font-size: 1.1rem !important; }
+        .flatpickr-calendar .flatpickr-current-month .numInputWrapper span { color: white !important; }
+        .flatpickr-calendar .flatpickr-weekdays { background: #f4f7fc; border-radius: 0; }
+        .flatpickr-calendar .flatpickr-weekday { color: #0f2b4a !important; font-weight: 700 !important; }
+        .flatpickr-calendar .flatpickr-day { border-radius: 6px; transition: background 0.2s, color 0.2s; }
+        .flatpickr-calendar .flatpickr-day:hover { background: #eef2f7; }
+        .flatpickr-calendar .flatpickr-day.selected { background: #0f2b4a !important; border-color: #0f2b4a !important; color: white !important; }
         .flatpickr-calendar .flatpickr-day.selected.startRange,
-        .flatpickr-calendar .flatpickr-day.selected.endRange {
-            background: #0f2b4a !important;
-            border-color: #0f2b4a !important;
-            color: white !important;
-        }
-        .flatpickr-calendar .flatpickr-day.inRange {
-            background: #d4dce8 !important;
-            border-color: #d4dce8 !important;
-            color: #0f2b4a !important;
-        }
-        .flatpickr-calendar .flatpickr-day.today {
-            border-color: #0f2b4a !important;
-            font-weight: 700;
-        }
-        .flatpickr-calendar .flatpickr-day.today:hover {
-            background: #eef2f7;
-        }
-        .flatpickr-calendar .flatpickr-day.disabled {
-            color: #ccc !important;
-        }
-        .flatpickr-calendar .flatpickr-day.flatpickr-disabled {
-            color: #ccc !important;
-        }
+        .flatpickr-calendar .flatpickr-day.selected.endRange { background: #0f2b4a !important; border-color: #0f2b4a !important; color: white !important; }
+        .flatpickr-calendar .flatpickr-day.inRange { background: #d4dce8 !important; border-color: #d4dce8 !important; color: #0f2b4a !important; }
+        .flatpickr-calendar .flatpickr-day.today { border-color: #0f2b4a !important; font-weight: 700; }
+        .flatpickr-calendar .flatpickr-day.today:hover { background: #eef2f7; }
+        .flatpickr-calendar .flatpickr-day.disabled { color: #ccc !important; }
+        .flatpickr-calendar .flatpickr-day.flatpickr-disabled { color: #ccc !important; }
         .flatpickr-calendar .flatpickr-day.prevMonthDay,
-        .flatpickr-calendar .flatpickr-day.nextMonthDay {
-            color: #bbb !important;
-        }
+        .flatpickr-calendar .flatpickr-day.nextMonthDay { color: #bbb !important; }
         .flatpickr-calendar .flatpickr-day.selected.startRange + .endRange,
-        .flatpickr-calendar .flatpickr-day.selected.endRange {
-            background: #0f2b4a !important;
-        }
-        .filtro-fechas .fecha-inputs input[type="date"] {
-            display: none;
-        }
+        .flatpickr-calendar .flatpickr-day.selected.endRange { background: #0f2b4a !important; }
+        .filtro-fechas .fecha-inputs input[type="date"] { display: none; }
 
-        .filtro-productos {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 16px;
-            align-items: center;
-        }
-        .filtro-productos .label {
-            font-weight: 600;
-            color: #0f2b4a;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            margin-right: 8px;
-        }
-        .filtro-productos .btn-filtro {
-            background: #eef2f7;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #0f2b4a;
-            cursor: pointer;
-            transition: all 0.2s;
-            touch-action: manipulation;
-        }
-        .filtro-productos .btn-filtro:hover {
-            background: #d4dce8;
-        }
-        .filtro-productos .btn-filtro.active {
-            background: #0f2b4a;
-            color: white;
-        }
-        .filtro-productos .btn-filtro.active:hover {
-            background: #1a3f64;
-        }
+        .filtro-productos { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+        .filtro-productos .label { font-weight: 600; color: #0f2b4a; font-size: 0.9rem; white-space: nowrap; margin-right: 8px; }
+        .filtro-productos .btn-filtro { background: #eef2f7; border: none; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; color: #0f2b4a; cursor: pointer; transition: all 0.2s; touch-action: manipulation; }
+        .filtro-productos .btn-filtro:hover { background: #d4dce8; }
+        .filtro-productos .btn-filtro.active { background: #0f2b4a; color: white; }
+        .filtro-productos .btn-filtro.active:hover { background: #1a3f64; }
 
-        .top-agentes-table td:first-child {
-            font-weight: 600;
-        }
-        .top-agentes-table .producto-destacado {
-            font-size: 0.8rem;
-            color: #666;
-            font-weight: normal;
-        }
+        .top-agentes-table td:first-child { font-weight: 600; }
+        .top-agentes-table .producto-destacado { font-size: 0.8rem; color: #666; font-weight: normal; }
 
-        .indicadores-extra {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 24px;
-        }
-        .indicador-box {
-            background: white;
-            border-radius: 12px;
-            padding: 16px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .indicador-box h4 {
-            color: #0f2b4a;
-            margin-bottom: 12px;
-            font-weight: 500;
-            border-bottom: 2px solid #eef2f7;
-            padding-bottom: 8px;
-        }
-        .indicador-box .mini-tabla {
-            font-size: 0.85rem;
-        }
-        .indicador-box .mini-tabla td {
-            padding: 6px 8px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .indicador-box .mini-tabla th {
-            background: #f4f7fc;
-            padding: 6px 8px;
-            font-size: 0.75rem;
-            white-space: nowrap;
-        }
-        .top-productos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-        }
-        .top-producto-card {
-            background: #f8faff;
-            border-radius: 8px;
-            padding: 12px;
-            border-left: 4px solid #0f2b4a;
-        }
-        .top-producto-card h5 {
-            color: #0f2b4a;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-        }
-        .top-producto-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .top-producto-card ul li {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            font-size: 0.8rem;
-            border-bottom: 1px dashed #e0e4ec;
-        }
-        .top-producto-card ul li:last-child {
-            border-bottom: none;
-        }
-        .top-producto-card .agente-nombre {
-            font-weight: 500;
-            color: #0f2b4a;
-        }
-        .top-producto-card .agente-stats {
-            color: #555;
-            font-weight: 600;
-        }
-        .dias-sin-venta .rojo {
-            color: #dc3545;
-            font-weight: 600;
-        }
-        .dias-sin-venta .naranja {
-            color: #fd7e14;
-            font-weight: 600;
-        }
-        .dias-sin-venta .verde {
-            color: #28a745;
-            font-weight: 600;
-        }
+        .indicadores-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+        .indicador-box { background: white; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .indicador-box h4 { color: #0f2b4a; margin-bottom: 12px; font-weight: 500; border-bottom: 2px solid #eef2f7; padding-bottom: 8px; }
+        .indicador-box .mini-tabla { font-size: 0.85rem; }
+        .indicador-box .mini-tabla td { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; }
+        .indicador-box .mini-tabla th { background: #f4f7fc; padding: 6px 8px; font-size: 0.75rem; white-space: nowrap; }
 
-        .bono-cumplido {
-            background-color: #d4edda !important;
-        }
-        .bono-cumplido td {
-            background-color: #d4edda !important;
-        }
-        .bono-cumplido:hover td {
-            background-color: #c3e6cb !important;
-        }
+        .top-productos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .top-producto-card { background: #f8faff; border-radius: 8px; padding: 12px; border-left: 4px solid #0f2b4a; }
+        .top-producto-card h5 { color: #0f2b4a; margin-bottom: 6px; font-size: 0.9rem; }
+        .top-producto-card ul { list-style: none; padding: 0; margin: 0; }
+        .top-producto-card ul li { display: flex; justify-content: space-between; padding: 2px 0; font-size: 0.8rem; border-bottom: 1px dashed #e0e4ec; }
+        .top-producto-card ul li:last-child { border-bottom: none; }
+        .top-producto-card .agente-nombre { font-weight: 500; color: #0f2b4a; }
+        .top-producto-card .agente-stats { color: #555; font-weight: 600; }
 
-        .filtro-agente-select {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        .filtro-agente-select .label {
-            font-weight: 600;
-            color: #0f2b4a;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-        .filtro-agente-select select {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 0.95rem;
-            background: white;
-            min-width: 150px;
-            cursor: pointer;
-            transition: border 0.2s;
-            touch-action: manipulation;
-        }
-        .filtro-agente-select select:focus {
-            border-color: #0f2b4a;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(15,43,74,0.2);
-        }
-        .filtro-agente-select .search-box {
-            margin-bottom: 0;
-            flex: 1;
-            min-width: 180px;
-        }
-        .filtro-agente-select .search-box input {
-            padding: 8px 40px 8px 16px;
-            font-size: 0.9rem;
-        }
-        .filtro-agente-select .search-box .clear-btn {
-            width: 24px;
-            height: 24px;
-            font-size: 0.9rem;
-        }
-        .filtro-agente-select .search-box .clear-btn i {
-            font-size: 0.8rem;
-        }
+        .dias-sin-venta .rojo { color: #dc3545; font-weight: 600; }
+        .dias-sin-venta .naranja { color: #fd7e14; font-weight: 600; }
+        .dias-sin-venta .verde { color: #28a745; font-weight: 600; }
 
-        .graficos-dashboard {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .graficos-dashboard .grafico-container {
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .graficos-dashboard .grafico-container h4 {
-            color: #0f2b4a;
-            margin-bottom: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            text-align: center;
-        }
-        .graficos-dashboard .grafico-container canvas {
-            max-height: 200px;
-            width: 100% !important;
-            height: auto !important;
-        }
+        .bono-cumplido { background-color: #d4edda !important; }
+        .bono-cumplido td { background-color: #d4edda !important; }
+        .bono-cumplido:hover td { background-color: #c3e6cb !important; }
 
-        /* ===== RESPONSIVE PARA MÓVILES ===== */
+        .filtro-agente-select { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+        .filtro-agente-select .label { font-weight: 600; color: #0f2b4a; font-size: 0.9rem; white-space: nowrap; }
+        .filtro-agente-select select { padding: 8px 16px; border-radius: 8px; border: 1px solid #ccc; font-size: 0.95rem; background: white; min-width: 150px; cursor: pointer; transition: border 0.2s; touch-action: manipulation; }
+        .filtro-agente-select select:focus { border-color: #0f2b4a; outline: none; box-shadow: 0 0 0 3px rgba(15,43,74,0.2); }
+        .filtro-agente-select .search-box { margin-bottom: 0; flex: 1; min-width: 180px; }
+        .filtro-agente-select .search-box input { padding: 8px 40px 8px 16px; font-size: 0.9rem; }
+        .filtro-agente-select .search-box .clear-btn { width: 24px; height: 24px; font-size: 0.9rem; }
+        .filtro-agente-select .search-box .clear-btn i { font-size: 0.8rem; }
+
+        .graficos-dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .graficos-dashboard .grafico-container { background: white; border-radius: 12px; padding: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .graficos-dashboard .grafico-container h4 { color: #0f2b4a; margin-bottom: 8px; font-size: 1rem; font-weight: 500; text-align: center; }
+        .graficos-dashboard .grafico-container canvas { max-height: 200px; width: 100% !important; height: auto !important; }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 600px) {
-            .graficos-dashboard {
-                grid-template-columns: 1fr;
-            }
-            /* Forzar que las tarjetas se apilen en una columna */
-            .cards-grid {
-                grid-template-columns: 1fr !important;
-            }
+            .graficos-dashboard { grid-template-columns: 1fr; }
+            .cards-grid { grid-template-columns: 1fr !important; }
         }
-
         @media (max-width: 550px) {
             .logo-line1 { font-size: 0.75rem; }
             .logo-line2 { font-size: 0.6rem; }
@@ -993,7 +234,6 @@
             .insurance-logo { height: 32px; max-width: 70px; }
             .nav-item i { font-size: 1.2rem; }
             .nav-item span { font-size: 0.55rem; }
-            /* Tarjetas en una columna */
             .cards-grid { grid-template-columns: 1fr; gap: 12px; }
             .main-content { padding: 16px; padding-bottom: 85px; }
             table { font-size: 0.75rem; }
@@ -1007,159 +247,51 @@
             .filtro-agente-select .search-box { flex: 1; }
             .bottom-nav { height: 64px; }
         }
-
         @media (max-width: 480px) {
-            .header {
-                padding: 6px 10px;
-            }
-            .header-left .logo-img {
-                height: 28px;
-                max-width: 60px;
-            }
-            .insurance-logo {
-                height: 24px;
-                max-width: 50px;
-            }
-            .logo-line1 {
-                font-size: 0.6rem;
-                letter-spacing: 0.5px;
-            }
-            .logo-line2 {
-                font-size: 0.45rem;
-                letter-spacing: 0.3px;
-            }
-            .header-right {
-                gap: 6px;
-            }
-            .header-right .reload-btn {
-                font-size: 0.9rem;
-                padding: 2px 6px;
-            }
-            .header-right .reload-btn i {
-                font-size: 1rem;
-            }
-            .bottom-nav {
-                height: 56px;
-            }
-            .nav-item i {
-                font-size: 1rem;
-            }
-            .nav-item span {
-                font-size: 0.45rem;
-                white-space: nowrap;
-            }
-            /* Tarjetas en una columna */
-            .cards-grid {
-                grid-template-columns: 1fr;
-                gap: 6px;
-            }
-            .card {
-                padding: 10px 6px;
-            }
-            .card .number {
-                font-size: 1rem;
-            }
-            .card .label {
-                font-size: 0.65rem;
-            }
-            .card i {
-                font-size: 0.9rem;
-                margin-bottom: 2px;
-            }
-            .section-title {
-                font-size: 1.1rem;
-                margin-bottom: 8px;
-            }
-            .section-content {
-                padding: 10px;
-            }
-            .filtro-fechas {
-                padding: 6px 8px;
-                gap: 6px;
-            }
-            .filtro-fechas .fecha-inputs .rango-input {
-                min-width: 100px;
-                font-size: 0.75rem;
-                padding: 4px 8px;
-            }
-            .filtro-fechas .fecha-inputs .rango-label {
-                font-size: 0.75rem;
-            }
+            .header { padding: 6px 10px; }
+            .header-left .logo-img { height: 28px; max-width: 60px; }
+            .insurance-logo { height: 24px; max-width: 50px; }
+            .logo-line1 { font-size: 0.6rem; letter-spacing: 0.5px; }
+            .logo-line2 { font-size: 0.45rem; letter-spacing: 0.3px; }
+            .header-right { gap: 6px; }
+            .header-right .reload-btn { font-size: 0.9rem; padding: 2px 6px; }
+            .header-right .reload-btn i { font-size: 1rem; }
+            .bottom-nav { height: 56px; }
+            .nav-item i { font-size: 1rem; }
+            .nav-item span { font-size: 0.45rem; white-space: nowrap; }
+            .cards-grid { grid-template-columns: 1fr; gap: 6px; }
+            .card { padding: 10px 6px; }
+            .card .number { font-size: 1rem; }
+            .card .label { font-size: 0.65rem; }
+            .card i { font-size: 0.9rem; margin-bottom: 2px; }
+            .section-title { font-size: 1.1rem; margin-bottom: 8px; }
+            .section-content { padding: 10px; }
+            .filtro-fechas { padding: 6px 8px; gap: 6px; }
+            .filtro-fechas .fecha-inputs .rango-input { min-width: 100px; font-size: 0.75rem; padding: 4px 8px; }
+            .filtro-fechas .fecha-inputs .rango-label { font-size: 0.75rem; }
             .filtro-fechas .acciones .btn-primary,
-            .filtro-fechas .acciones .btn-secundario {
-                padding: 4px 8px;
-                font-size: 0.65rem;
-            }
+            .filtro-fechas .acciones .btn-secundario { padding: 4px 8px; font-size: 0.65rem; }
             .filtro-botones .label,
-            .filtro-productos .label {
-                font-size: 0.75rem;
-            }
+            .filtro-productos .label { font-size: 0.75rem; }
             .filtro-botones .btn-filtro,
-            .filtro-productos .btn-filtro {
-                padding: 3px 8px;
-                font-size: 0.65rem;
-            }
-            .filtro-agente-select .label {
-                font-size: 0.75rem;
-            }
-            .filtro-agente-select select {
-                padding: 4px 8px;
-                font-size: 0.75rem;
-                min-width: 80px;
-            }
-            .filtro-agente-select .search-box input {
-                padding: 4px 30px 4px 10px;
-                font-size: 0.75rem;
-            }
-            .filtro-agente-select .search-box .clear-btn {
-                width: 20px;
-                height: 20px;
-                font-size: 0.7rem;
-            }
-            table {
-                font-size: 0.65rem;
-            }
-            th, td {
-                padding: 3px 4px;
-            }
-            .modal-box {
-                padding: 16px 12px;
-                width: 95%;
-            }
-            .modal-box h3 {
-                font-size: 1rem;
-            }
-            .indicadores-extra {
-                grid-template-columns: 1fr !important;
-                gap: 12px;
-            }
-            .top-productos-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .indicador-box {
-                padding: 12px;
-            }
-            .indicador-box h4 {
-                font-size: 0.9rem;
-            }
-            .graficos-dashboard .grafico-container {
-                padding: 10px;
-            }
-            .graficos-dashboard .grafico-container canvas {
-                max-height: 150px;
-            }
-            .search-box input {
-                font-size: 0.85rem;
-                padding: 8px 30px 8px 12px;
-            }
-            .search-box .clear-btn {
-                width: 24px;
-                height: 24px;
-                font-size: 0.8rem;
-            }
-            .bottom-nav {
-                gap: 0;
-            }
+            .filtro-productos .btn-filtro { padding: 3px 8px; font-size: 0.65rem; }
+            .filtro-agente-select .label { font-size: 0.75rem; }
+            .filtro-agente-select select { padding: 4px 8px; font-size: 0.75rem; min-width: 80px; }
+            .filtro-agente-select .search-box input { padding: 4px 30px 4px 10px; font-size: 0.75rem; }
+            .filtro-agente-select .search-box .clear-btn { width: 20px; height: 20px; font-size: 0.7rem; }
+            table { font-size: 0.65rem; }
+            th, td { padding: 3px 4px; }
+            .modal-box { padding: 16px 12px; width: 95%; }
+            .modal-box h3 { font-size: 1rem; }
+            .indicadores-extra { grid-template-columns: 1fr !important; gap: 12px; }
+            .top-productos-grid { grid-template-columns: 1fr !important; }
+            .indicador-box { padding: 12px; }
+            .indicador-box h4 { font-size: 0.9rem; }
+            .graficos-dashboard .grafico-container { padding: 10px; }
+            .graficos-dashboard .grafico-container canvas { max-height: 150px; }
+            .search-box input { font-size: 0.85rem; padding: 8px 30px 8px 12px; }
+            .search-box .clear-btn { width: 24px; height: 24px; font-size: 0.8rem; }
+            .bottom-nav { gap: 0; }
         }
     </style>
 </head>
@@ -1214,28 +346,20 @@
 
             <div class="section-content" style="margin-top:24px;">
                 <h4 style="color:#0f2b4a; margin-bottom:12px;">🏆 Top Agentes</h4>
-                <div id="topAgentesContainer">
-                    <p class="loading-message">Cargando datos...</p>
-                </div>
+                <div id="topAgentesContainer"><p class="loading-message">Cargando datos...</p></div>
             </div>
 
             <div class="indicadores-extra">
                 <div class="indicador-box" style="grid-column: 1 / 2;">
                     <h4>🏅 Top 5 por Producto</h4>
-                    <div id="topPorProductoContainer">
-                        <p class="loading-message">Cargando...</p>
-                    </div>
+                    <div id="topPorProductoContainer"><p class="loading-message">Cargando...</p></div>
                 </div>
                 <div class="indicador-box" style="grid-column: 2 / 3;">
                     <h4>⏳ Días sin procesar</h4>
-                    <div id="diasSinVentaContainer">
-                        <p class="loading-message">Cargando...</p>
-                    </div>
+                    <div id="diasSinVentaContainer"><p class="loading-message">Cargando...</p></div>
                     <hr style="margin: 16px 0; border-color: #eef2f7;">
                     <h4>🆕 Procesamientos Recientes</h4>
-                    <div id="ventasRecientesContainer">
-                        <p class="loading-message">Cargando...</p>
-                    </div>
+                    <div id="ventasRecientesContainer"><p class="loading-message">Cargando...</p></div>
                 </div>
             </div>
         </section>
@@ -1299,19 +423,8 @@
                 </div>
                 <div class="table-wrapper">
                     <table id="tablaProduccion">
-                        <thead>
-                            <tr>
-                                <th>Agente</th>
-                                <th>Producto</th>
-                                <th>Código Póliza</th>
-                                <th>Comisión</th>
-                                <th>NAP</th>
-                                <th>Estatus</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cuerpoTabla">
-                            <tr><td colspan="6" style="text-align:center;color:#999;">Cargando datos...</td></tr>
-                        </tbody>
+                        <thead><tr><th>Agente</th><th>Producto</th><th>Código Póliza</th><th>Comisión</th><th>NAP</th><th>Estatus</th></tr></thead>
+                        <tbody id="cuerpoTabla"><tr><td colspan="6" style="text-align:center;color:#999;">Cargando datos...</td></tr></tbody>
                     </table>
                 </div>
             </div>
@@ -1324,9 +437,7 @@
                 <input type="text" id="searchAgent" placeholder="🔍 Buscar por nombre, ID o NPN..." oninput="onSearchInput()">
                 <button class="clear-btn" id="clearSearchBtn" onclick="limpiarBusqueda()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
             </div>
-            <div class="section-content" id="contenidoJerarquia">
-                <p class="loading-message">Cargando organigrama...</p>
-            </div>
+            <div class="section-content" id="contenidoJerarquia"><p class="loading-message">Cargando organigrama...</p></div>
         </section>
 
         <!-- CONTRATACIONES -->
@@ -1398,14 +509,12 @@
 
     <script>
         // =============================================================
-        //  PANEL DE DEPURACIÓN (solo consola)
+        //  PANEL DE DEPURACIÓN
         // =============================================================
-        function addLog(message, type = 'info') {
-            console.log(`[${type.toUpperCase()}]`, message);
-        }
+        function addLog(message, type = 'info') { console.log(`[${type.toUpperCase()}]`, message); }
 
         // =============================================================
-        //  FUNCIONES AUXILIARES DE FORMATEO
+        //  FUNCIONES AUXILIARES
         // =============================================================
         function formatDateMMDDYYYY(date) {
             if (!(date instanceof Date) || isNaN(date)) return '';
@@ -1425,6 +534,16 @@
             const [year, month] = mesKey.split('-');
             const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
             return `${meses[parseInt(month)-1]} ${year}`;
+        }
+
+        // =============================================================
+        //  OBTENER NOMBRE CORTO (nombre + primer apellido)
+        // =============================================================
+        function getShortName(fullName) {
+            if (!fullName) return '';
+            const parts = fullName.trim().split(/\s+/);
+            if (parts.length <= 2) return fullName.trim();
+            return parts.slice(0, 2).join(' ');
         }
 
         // =============================================================
@@ -1480,7 +599,7 @@
         })();
 
         // =============================================================
-        //  FUNCIONES AUXILIARES GENERALES
+        //  VARIABLES GLOBALES
         // =============================================================
         let datosGlobales = { produccion: [], jerarquia: [], contratacion: [], pagos: [], comisiones: [], bonos: [] };
         let arbolJerarquia = null;
@@ -1942,15 +1061,7 @@
                 html = '<p class="error-message">No hay agentes con ventas en el período.</p>';
             } else {
                 html = `<div class="table-wrapper"><table class="top-agentes-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Agente</th>
-                            <th>Pólizas</th>
-                            <th>NAP Total</th>
-                            <th>Producto Destacado</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>#</th><th>Agente</th><th>Pólizas</th><th>NAP Total</th><th>Producto Destacado</th></tr></thead>
                     <tbody>`;
                 top.forEach((item, index) => {
                     let productoDestacado = '—';
@@ -1961,9 +1072,10 @@
                             productoDestacado = prod;
                         }
                     }
+                    const shortName = getShortName(item.nombre);
                     html += `<tr>
                         <td>${index + 1}</td>
-                        <td><strong>${item.nombre}</strong></td>
+                        <td class="agente-cell"><strong>${shortName}</strong></td>
                         <td>${item.polizas}</td>
                         <td>${formatCurrency(item.napTotal)}</td>
                         <td><span class="producto-destacado">${productoDestacado}</span></td>
@@ -2032,8 +1144,9 @@
                     <ul>`;
                 top.forEach((item, idx) => {
                     const stats = `${item.polizas} / ${formatCurrency(item.napTotal)}`;
+                    const shortName = getShortName(item.nombre);
                     html += `<li>
-                        <span class="agente-nombre">${idx+1}. ${item.nombre}</span>
+                        <span class="agente-nombre">${idx+1}. ${shortName}</span>
                         <span class="agente-stats">${stats}</span>
                     </li>`;
                 });
@@ -2101,7 +1214,7 @@
                 if (item.dias > 30) clase = 'rojo';
                 else if (item.dias > 15) clase = 'naranja';
                 html += `<tr>
-                    <td>${item.agente}</td>
+                    <td class="agente-cell">${item.agente}</td>
                     <td>${item.producto}</td>
                     <td class="${clase}">${item.dias}</td>
                 </tr>`;
@@ -2165,7 +1278,7 @@
                 <tbody>`;
             recientes.forEach(item => {
                 html += `<tr>
-                    <td>${item.agente}</td>
+                    <td class="agente-cell">${item.agente}</td>
                     <td>${item.producto}</td>
                 </tr>`;
             });
@@ -2220,15 +1333,8 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: { stepSize: 1 }
-                            }
-                        }
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
                     }
                 });
             }
@@ -2270,23 +1376,13 @@
                     type: 'pie',
                     data: {
                         labels: labelsPie,
-                        datasets: [{
-                            data: valuesPie,
-                            backgroundColor: colores,
-                            borderWidth: 0
-                        }]
+                        datasets: [{ data: valuesPie, backgroundColor: colores, borderWidth: 0 }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    boxWidth: 12,
-                                    padding: 12
-                                }
-                            },
+                            legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12 } },
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
@@ -2434,7 +1530,7 @@
 
                 const codigoEscapado = codigoPoliza.replace(/'/g, "\\'");
                 html += `<tr>
-                    <td>${agente}</td>
+                    <td class="agente-cell">${agente}</td>
                     <td>${producto}</td>
                     <td><span class="clickable-poliza" data-codigo="${codigoEscapado}" data-fila='${JSON.stringify(row).replace(/'/g, "&#39;")}'>${codigoPoliza}</span></td>
                     <td>${icono}</td>
@@ -2495,11 +1591,8 @@
             const input = document.getElementById('searchProduccion');
             const clearBtn = document.getElementById('clearProdSearchBtn');
             const value = input.value.trim();
-            if (value.length > 0) {
-                clearBtn.classList.add('visible');
-            } else {
-                clearBtn.classList.remove('visible');
-            }
+            if (value.length > 0) clearBtn.classList.add('visible');
+            else clearBtn.classList.remove('visible');
             filtroBusquedaProd = value;
             renderizarProduccion();
         }
@@ -2713,7 +1806,9 @@
                         let val = row[col];
                         if (val === undefined || val === null) val = '';
                         if (typeof val === 'object') val = JSON.stringify(val);
-                        html += `<td>${val}</td>`;
+                        // Si la columna se llama "agente" o "Agente", alinear a la izquierda
+                        const isAgente = col.toLowerCase().includes('agente');
+                        html += `<td${isAgente ? ' class="agente-cell"' : ''}>${val}</td>`;
                     });
                     html += `</tr>`;
                 });
@@ -2840,8 +1935,8 @@
                 else if (estatusUpper === 'SUSPENDIDA' || estatusUpper === 'SUSPENDIDO') estatusClass = 'estatus-suspendida';
 
                 html += `<tr>
-                    <td><span class="clickable-poliza" data-codigo="${codigoEscapado}">${item.codigo}</span></td>
-                    <td>${item.cliente}</td>
+                    <td>${item.codigo}</td>
+                    <td class="agente-cell">${item.cliente}</td>
                     <td><span class="${estatusClass}">${item.estatus}</span></td>
                     <td>${item.ultimoRegistro}</td>
                 </tr>`;
@@ -3039,18 +2134,14 @@
 
             let html = `<div class="result-count">${datosFiltrados.length} códigos de póliza encontrados</div>`;
             html += `<div class="table-wrapper"><table>
-                <thead><tr>
-                    <th>Cliente</th>
-                    <th>Código de póliza</th>
-                    <th>Advance</th>
-                </tr></thead>
+                <thead><tr><th>Cliente</th><th>Código de póliza</th><th>Advance</th></tr></thead>
                 <tbody>`;
 
             datosFiltrados.forEach(item => {
                 const codigoEscapado = item.codigo.replace(/'/g, "\\'");
                 const registrosJSON = JSON.stringify(item.registros).replace(/'/g, "&#39;");
                 html += `<tr>
-                    <td>${item.cliente}</td>
+                    <td class="agente-cell">${item.cliente}</td>
                     <td><span class="clickable-poliza" data-codigo="${codigoEscapado}" data-registros='${registrosJSON}'>${item.codigo}</span></td>
                     <td>${item.advance}</td>
                 </tr>`;
@@ -3156,7 +2247,7 @@
         }
 
         // =============================================================
-        //  BONOS - Calculado desde Producción
+        //  BONOS
         // =============================================================
         let bonosCalculados = [];
 
@@ -3293,21 +2384,13 @@
             let html = `<div class="result-count">${datos.length} agentes con bono</div>`;
             html += `<div class="table-wrapper"><table>
                 <thead>
-                    <tr>
-                        <th>Agente</th>
-                        <th>Mes</th>
-                        <th>Pólizas Generales</th>
-                        <th>Bono General</th>
-                        <th>Pólizas DVH</th>
-                        <th>Bono DVH</th>
-                        <th>Total Bono</th>
-                    </tr>
+                    <tr><th>Agente</th><th>Mes</th><th>Pólizas Generales</th><th>Bono General</th><th>Pólizas DVH</th><th>Bono DVH</th><th>Total Bono</th></tr>
                 </thead>
                 <tbody>`;
 
             datos.forEach(item => {
                 html += `<tr class="bono-cumplido">
-                    <td>${item.agente}</td>
+                    <td class="agente-cell">${item.agente}</td>
                     <td>${formatearMesAnio(item.mes)}</td>
                     <td>${item.generales}</td>
                     <td>${formatCurrency(item.bonoGeneral)}</td>
@@ -3318,7 +2401,6 @@
             });
 
             html += `</tbody></table></div>`;
-
             container.innerHTML = html;
         }
 
@@ -3327,7 +2409,6 @@
             const clearBtn = document.getElementById('clearBonosBtn');
             if (input.value.trim().length > 0) clearBtn.classList.add('visible');
             else clearBtn.classList.remove('visible');
-
             renderizarTablaBonos(input.value.trim());
         }
 
@@ -3340,7 +2421,7 @@
         }
 
         // =============================================================
-        //  CARGA DE DATOS (SOLO TABLAS EXISTENTES)
+        //  CARGA DE DATOS
         // =============================================================
         async function cargarDatos() {
             addLog('⏳ Cargando datos desde Supabase...', 'info');
@@ -3409,7 +2490,6 @@
         // =============================================================
         document.addEventListener('DOMContentLoaded', function() {
             addLog('📄 Página cargada, iniciando...', 'info');
-
             initFlatpickr();
 
             document.querySelectorAll('#filtroBotones .btn-filtro').forEach(btn => {
