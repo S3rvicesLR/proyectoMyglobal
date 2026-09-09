@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Control de Producción - Seguros</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Flatpickr CSS -->
@@ -16,20 +16,31 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
     <style>
-        /* ===== ESTILOS BASE ===== */
+        /* ===== RESET Y BASE ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        body {
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #f4f7fc;
+        }
+        /* Contenedor que se escalará */
+        #app-wrapper {
+            width: 1200px;          /* Ancho base del diseño */
+            height: 100vh;
+            transform-origin: top left;
             background: #f4f7fc;
             display: flex;
             flex-direction: column;
-            height: 100vh;
             overflow: hidden;
+            position: relative;
         }
+        /* ===== ESTILOS DEL HEADER ===== */
         .header {
             background: #0f2b4a;
             color: white;
@@ -38,13 +49,12 @@
             align-items: center;
             justify-content: space-between;
             flex-shrink: 0;
-            gap: 8px;
+            width: 100%;
         }
         .header-left {
             display: flex;
             align-items: center;
             gap: 12px;
-            min-width: 0;
         }
         .header-left .logo-img {
             height: 48px;
@@ -57,7 +67,6 @@
             display: flex;
             flex-direction: column;
             line-height: 1.2;
-            white-space: nowrap;
         }
         .logo-line1 {
             font-family: 'Georgia', 'Times New Roman', serif;
@@ -81,7 +90,6 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            flex-shrink: 0;
         }
         .header-right .reload-btn {
             background: transparent;
@@ -92,7 +100,6 @@
             transition: transform 0.3s;
             padding: 4px 8px;
             border-radius: 6px;
-            touch-action: manipulation;
         }
         .header-right .reload-btn:hover {
             transform: rotate(180deg);
@@ -111,13 +118,14 @@
             padding: 2px;
         }
 
+        /* ===== MAIN CONTENT ===== */
         .main-content {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
             padding: 20px 24px;
-            padding-bottom: 90px;
-            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
+            width: 100%;
         }
         .page {
             display: none;
@@ -175,14 +183,6 @@
             padding: 22px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .badge {
-            background: #eef2f7;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #0f2b4a;
-        }
         .btn-primary {
             background: #0f2b4a;
             color: white;
@@ -191,7 +191,6 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            touch-action: manipulation;
         }
         table {
             width: 100%;
@@ -210,17 +209,12 @@
         td {
             padding: 10px;
             border-bottom: 1px solid #eee;
-            word-break: break-word;
         }
         .table-wrapper {
             overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
         }
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            width: 100%;
             background: white;
             display: flex;
             justify-content: space-around;
@@ -228,33 +222,24 @@
             height: 72px;
             box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
             border-top: 1px solid #e9ecf0;
-            z-index: 100;
-            gap: 0;
+            flex-shrink: 0;
         }
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex: 1 1 0;
+            flex: 1;
             height: 100%;
             color: #8892a8;
             font-size: 0.65rem;
             cursor: pointer;
             border: none;
             background: transparent;
-            padding: 0 2px;
-            text-align: center;
-            touch-action: manipulation;
-            min-width: 0;
         }
         .nav-item i {
             font-size: 1.4rem;
             margin-bottom: 2px;
-        }
-        .nav-item span {
-            white-space: nowrap;
-            font-size: 0.6rem;
         }
         .nav-item.active {
             color: #0f2b4a;
@@ -280,6 +265,7 @@
             border: 1px solid #bee5eb;
         }
 
+        /* ===== JERARQUÍA ===== */
         .hierarchy-list {
             list-style: none;
             padding-left: 0;
@@ -326,6 +312,7 @@
         .hierarchy-list .children-container.collapsed { display: none; }
         .hierarchy-list .children-container.expanded { display: block; }
 
+        /* ===== BUSCADOR ===== */
         .search-box {
             position: relative;
             margin-bottom: 16px;
@@ -374,6 +361,7 @@
         }
         .search-box .clear-btn i { font-size: 0.9rem; }
 
+        /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -462,6 +450,7 @@
             text-align: center;
         }
 
+        /* ===== GRUPOS CONTRATACIONES ===== */
         .grupo-item { border-bottom: 1px solid #eee; }
         .grupo-item:last-child { border-bottom: none; }
         .grupo-header {
@@ -591,7 +580,6 @@
             color: #0f2b4a;
             cursor: pointer;
             transition: all 0.2s;
-            touch-action: manipulation;
         }
         .filtro-botones .btn-filtro:hover {
             background: #d4dce8;
@@ -675,7 +663,6 @@
             color: #0f2b4a;
             font-weight: 600;
             transition: background 0.2s;
-            touch-action: manipulation;
         }
         .filtro-fechas .acciones .btn-secundario:hover {
             background: #d4dce8;
@@ -787,7 +774,6 @@
             color: #0f2b4a;
             cursor: pointer;
             transition: all 0.2s;
-            touch-action: manipulation;
         }
         .filtro-productos .btn-filtro:hover {
             background: #d4dce8;
@@ -925,7 +911,6 @@
             min-width: 150px;
             cursor: pointer;
             transition: border 0.2s;
-            touch-action: manipulation;
         }
         .filtro-agente-select select:focus {
             border-color: #0f2b4a;
@@ -974,423 +959,265 @@
             width: 100% !important;
             height: auto !important;
         }
-
-        /* ===== RESPONSIVE PARA MÓVILES ===== */
-        @media (max-width: 600px) {
-            .graficos-dashboard {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 550px) {
-            .logo-line1 { font-size: 0.75rem; }
-            .logo-line2 { font-size: 0.6rem; }
-            .header-left .logo-img { height: 36px; max-width: 90px; }
-            .insurance-logo { height: 32px; max-width: 70px; }
-            .nav-item i { font-size: 1.2rem; }
-            .nav-item span { font-size: 0.55rem; }
-            .cards-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-            .main-content { padding: 16px; padding-bottom: 85px; }
-            table { font-size: 0.75rem; }
-            th, td { padding: 6px 8px; }
-            .filtro-fechas { flex-direction: column; align-items: stretch; gap: 8px; }
-            .filtro-fechas .acciones { flex-wrap: wrap; justify-content: center; }
-            .indicadores-extra { grid-template-columns: 1fr !important; }
-            .top-productos-grid { grid-template-columns: 1fr 1fr !important; }
-            .card .number { font-size: 1.3rem; }
-            .filtro-agente-select { flex-direction: column; align-items: stretch; }
-            .filtro-agente-select .search-box { flex: 1; }
-            .bottom-nav { height: 64px; }
-        }
-
-        @media (max-width: 480px) {
-            .header {
-                padding: 6px 10px;
-            }
-            .header-left .logo-img {
-                height: 28px;
-                max-width: 60px;
-            }
-            .insurance-logo {
-                height: 24px;
-                max-width: 50px;
-            }
-            .logo-line1 {
-                font-size: 0.6rem;
-                letter-spacing: 0.5px;
-            }
-            .logo-line2 {
-                font-size: 0.45rem;
-                letter-spacing: 0.3px;
-            }
-            .header-right {
-                gap: 6px;
-            }
-            .header-right .reload-btn {
-                font-size: 0.9rem;
-                padding: 2px 6px;
-            }
-            .header-right .reload-btn i {
-                font-size: 1rem;
-            }
-            .bottom-nav {
-                height: 56px;
-            }
-            .nav-item i {
-                font-size: 1rem;
-            }
-            .nav-item span {
-                font-size: 0.45rem;
-                white-space: nowrap;
-            }
-            .cards-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 6px;
-            }
-            .card {
-                padding: 10px 6px;
-            }
-            .card .number {
-                font-size: 1rem;
-            }
-            .card .label {
-                font-size: 0.65rem;
-            }
-            .card i {
-                font-size: 0.9rem;
-                margin-bottom: 2px;
-            }
-            .section-title {
-                font-size: 1.1rem;
-                margin-bottom: 8px;
-            }
-            .section-content {
-                padding: 10px;
-            }
-            .filtro-fechas {
-                padding: 6px 8px;
-                gap: 6px;
-            }
-            .filtro-fechas .fecha-inputs .rango-input {
-                min-width: 100px;
-                font-size: 0.75rem;
-                padding: 4px 8px;
-            }
-            .filtro-fechas .fecha-inputs .rango-label {
-                font-size: 0.75rem;
-            }
-            .filtro-fechas .acciones .btn-primary,
-            .filtro-fechas .acciones .btn-secundario {
-                padding: 4px 8px;
-                font-size: 0.65rem;
-            }
-            .filtro-botones .label,
-            .filtro-productos .label {
-                font-size: 0.75rem;
-            }
-            .filtro-botones .btn-filtro,
-            .filtro-productos .btn-filtro {
-                padding: 3px 8px;
-                font-size: 0.65rem;
-            }
-            .filtro-agente-select .label {
-                font-size: 0.75rem;
-            }
-            .filtro-agente-select select {
-                padding: 4px 8px;
-                font-size: 0.75rem;
-                min-width: 80px;
-            }
-            .filtro-agente-select .search-box input {
-                padding: 4px 30px 4px 10px;
-                font-size: 0.75rem;
-            }
-            .filtro-agente-select .search-box .clear-btn {
-                width: 20px;
-                height: 20px;
-                font-size: 0.7rem;
-            }
-            table {
-                font-size: 0.65rem;
-            }
-            th, td {
-                padding: 3px 4px;
-            }
-            .modal-box {
-                padding: 16px 12px;
-                width: 95%;
-            }
-            .modal-box h3 {
-                font-size: 1rem;
-            }
-            .indicadores-extra {
-                grid-template-columns: 1fr !important;
-                gap: 12px;
-            }
-            .top-productos-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .indicador-box {
-                padding: 12px;
-            }
-            .indicador-box h4 {
-                font-size: 0.9rem;
-            }
-            .graficos-dashboard .grafico-container {
-                padding: 10px;
-            }
-            .graficos-dashboard .grafico-container canvas {
-                max-height: 150px;
-            }
-            .search-box input {
-                font-size: 0.85rem;
-                padding: 8px 30px 8px 12px;
-            }
-            .search-box .clear-btn {
-                width: 24px;
-                height: 24px;
-                font-size: 0.8rem;
-            }
-            .bottom-nav {
-                gap: 0;
-            }
-        }
     </style>
 </head>
 <body>
-
-    <header class="header">
-        <div class="header-left">
-            <img src="MY Globla logo1.jpg" alt="MY GLOBAL SOLUTIONS GROUP" class="logo-img">
-            <div class="logo-text-group">
-                <span class="logo-line1">MY GLOBAL</span>
-                <span class="logo-line2">Solutions Group</span>
-            </div>
-        </div>
-        <div class="header-right">
-            <button class="reload-btn" onclick="cargarDatos()" title="Recargar datos">
-                <i class="fas fa-sync-alt"></i>
-            </button>
-            <img src="HealthSpring_idQSMDb8Ya_1.png" alt="Aseguradora" class="insurance-logo">
-        </div>
-    </header>
-
-    <main class="main-content" id="mainContent">
-        <!-- DASHBOARD -->
-        <section class="page active" id="page-dashboard">
-            <h2 class="section-title">📊 Dashboard</h2>
-            <div class="filtro-fechas" id="filtroFechasDashboard">
-                <div class="fecha-inputs">
-                    <span class="rango-label"><i class="fas fa-calendar-alt"></i> Rango:</span>
-                    <input type="text" class="rango-input" id="rangoDash" placeholder="Seleccionar rango de fechas">
-                </div>
-                <div class="acciones">
-                    <button class="btn-primary" onclick="aplicarFiltroFechas()">Aplicar</button>
-                    <button class="btn-secundario" onclick="setRangoMes()">Este mes</button>
-                    <button class="btn-secundario" onclick="setRangoMesAnterior()">Mes anterior</button>
-                    <button class="btn-secundario" style="color:#dc3545;" onclick="limpiarFiltroFechas()">Limpiar</button>
+    <!-- Contenedor principal que se escalará -->
+    <div id="app-wrapper">
+        <header class="header">
+            <div class="header-left">
+                <img src="MY Globla logo1.jpg" alt="MY GLOBAL SOLUTIONS GROUP" class="logo-img">
+                <div class="logo-text-group">
+                    <span class="logo-line1">MY GLOBAL</span>
+                    <span class="logo-line2">Solutions Group</span>
                 </div>
             </div>
-
-            <div class="cards-grid" id="dashboardCards"></div>
-            <div class="cards-grid" id="productoCards" style="margin-top:8px;"></div>
-
-            <div class="graficos-dashboard">
-                <div class="grafico-container">
-                    <h4>📊 Evolución mensual de pólizas</h4>
-                    <canvas id="chartMensual"></canvas>
-                </div>
-                <div class="grafico-container">
-                    <h4>🍩 Distribución por producto (NAP total)</h4>
-                    <canvas id="chartProductos"></canvas>
-                </div>
+            <div class="header-right">
+                <button class="reload-btn" onclick="cargarDatos()" title="Recargar datos">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <img src="HealthSpring_idQSMDb8Ya_1.png" alt="Aseguradora" class="insurance-logo">
             </div>
+        </header>
 
-            <div class="section-content" style="margin-top:24px;">
-                <h4 style="color:#0f2b4a; margin-bottom:12px;">🏆 Top Agentes</h4>
-                <div id="topAgentesContainer">
-                    <p class="loading-message">Cargando datos...</p>
-                </div>
-            </div>
-
-            <div class="indicadores-extra">
-                <div class="indicador-box" style="grid-column: 1 / 2;">
-                    <h4>🏅 Top 5 por Producto</h4>
-                    <div id="topPorProductoContainer">
-                        <p class="loading-message">Cargando...</p>
+        <main class="main-content" id="mainContent">
+            <!-- DASHBOARD -->
+            <section class="page active" id="page-dashboard">
+                <h2 class="section-title">📊 Dashboard</h2>
+                <div class="filtro-fechas" id="filtroFechasDashboard">
+                    <div class="fecha-inputs">
+                        <span class="rango-label"><i class="fas fa-calendar-alt"></i> Rango:</span>
+                        <input type="text" class="rango-input" id="rangoDash" placeholder="Seleccionar rango de fechas">
+                    </div>
+                    <div class="acciones">
+                        <button class="btn-primary" onclick="aplicarFiltroFechas()">Aplicar</button>
+                        <button class="btn-secundario" onclick="setRangoMes()">Este mes</button>
+                        <button class="btn-secundario" onclick="setRangoMesAnterior()">Mes anterior</button>
+                        <button class="btn-secundario" style="color:#dc3545;" onclick="limpiarFiltroFechas()">Limpiar</button>
                     </div>
                 </div>
-                <div class="indicador-box" style="grid-column: 2 / 3;">
-                    <h4>⏳ Días sin procesar</h4>
-                    <div id="diasSinVentaContainer">
-                        <p class="loading-message">Cargando...</p>
-                    </div>
-                    <hr style="margin: 16px 0; border-color: #eef2f7;">
-                    <h4>🆕 Procesamientos Recientes</h4>
-                    <div id="ventasRecientesContainer">
-                        <p class="loading-message">Cargando...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- PRODUCCIÓN -->
-        <section class="page" id="page-produccion">
-            <h2 class="section-title">📄 Producción de Pólizas</h2>
-            <div class="filtro-fechas" id="filtroFechasProduccion">
-                <div class="fecha-inputs">
-                    <span class="rango-label"><i class="fas fa-calendar-alt"></i> Rango:</span>
-                    <input type="text" class="rango-input" id="rangoProd" placeholder="Seleccionar rango de fechas">
-                </div>
-                <div class="acciones">
-                    <button class="btn-primary" onclick="aplicarFiltroFechas()">Aplicar</button>
-                    <button class="btn-secundario" onclick="setRangoMes()">Este mes</button>
-                    <button class="btn-secundario" onclick="setRangoMesAnterior()">Mes anterior</button>
-                    <button class="btn-secundario" style="color:#dc3545;" onclick="limpiarFiltroFechas()">Limpiar</button>
-                </div>
-            </div>
-            <div class="cards-grid" style="margin-top:0;">
-                <div class="card" style="border-top-color:#28a745;"><i class="fas fa-file-signature"></i><div class="number" id="totalPolizas">0</div><div class="label">Total Pólizas</div></div>
-                <div class="card" style="border-top-color:#ffc107;"><i class="fas fa-check-circle"></i><div class="number" id="totalActivas">0</div><div class="label">Pólizas Activas</div></div>
-                <div class="card" style="border-top-color:#17a2b8;"><i class="fas fa-dollar-sign"></i><div class="number" id="totalPrima">0.00</div><div class="label">Prima NAP Total</div></div>
-            </div>
-            <div class="cards-grid" style="margin-top:8px; margin-bottom:16px;">
-                <div class="card" style="border-top-color:#fd7e14;"><div class="number" id="totalPendientes">0</div><div class="label">Pendientes</div></div>
-                <div class="card" style="border-top-color:#dc3545;"><div class="number" id="totalTerminadas">0</div><div class="label">Terminadas</div></div>
-                <div class="card" style="border-top-color:#6f42c1;"><div class="number" id="totalSuspendidas">0</div><div class="label">Suspendidas</div></div>
-                <div class="card" style="border-top-color:#17a2b8;"><div class="number" id="totalAgentes">0</div><div class="label">Agentes en campo</div></div>
-            </div>
+                <div class="cards-grid" id="dashboardCards"></div>
+                <div class="cards-grid" id="productoCards" style="margin-top:8px;"></div>
 
-            <div class="section-content" style="margin-top:8px;">
-                <h4 style="color:#0f2b4a; margin-bottom:12px;">📋 Libro de Negocios</h4>
-                <div class="filtro-botones" id="filtroBotones">
-                    <span class="label"><i class="fas fa-filter"></i> Estatus:</span>
-                    <button class="btn-filtro active" data-filtro="todas">Todas</button>
-                    <button class="btn-filtro" data-filtro="activa">Activas</button>
-                    <button class="btn-filtro" data-filtro="pendiente">Pendientes</button>
-                    <button class="btn-filtro" data-filtro="terminada">Terminadas</button>
-                    <button class="btn-filtro" data-filtro="suspendida">Suspendidas</button>
-                </div>
-                <div class="filtro-productos" id="filtroProductos">
-                    <span class="label"><i class="fas fa-tag"></i> Producto:</span>
-                    <button class="btn-filtro active" data-producto="todas">Todos</button>
-                    <button class="btn-filtro" data-producto="accident">Accident</button>
-                    <button class="btn-filtro" data-producto="cancer">Cancer</button>
-                    <button class="btn-filtro" data-producto="dvh">DVH</button>
-                    <button class="btn-filtro" data-producto="heart">Heart</button>
-                    <button class="btn-filtro" data-producto="indemnity">Indemnity</button>
-                </div>
-                <div class="filtro-agente-select">
-                    <span class="label"><i class="fas fa-user"></i> Agente:</span>
-                    <select id="selectAgenteProduccion" onchange="renderizarProduccion()">
-                        <option value="todos">Todos</option>
-                    </select>
-                    <span class="label"><i class="fas fa-search"></i> Buscar:</span>
-                    <div class="search-box">
-                        <input type="text" id="searchProduccion" placeholder="Cliente o Código de póliza..." oninput="filtrarBusquedaProduccion()">
-                        <button class="clear-btn" id="clearProdSearchBtn" onclick="limpiarBusquedaProduccion()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+                <div class="graficos-dashboard">
+                    <div class="grafico-container">
+                        <h4>📊 Evolución mensual de pólizas</h4>
+                        <canvas id="chartMensual"></canvas>
+                    </div>
+                    <div class="grafico-container">
+                        <h4>🍩 Distribución por producto (NAP total)</h4>
+                        <canvas id="chartProductos"></canvas>
                     </div>
                 </div>
-                <div class="table-wrapper">
-                    <table id="tablaProduccion">
-                        <thead>
-                            <tr>
-                                <th>Agente</th>
-                                <th>Producto</th>
-                                <th>Código Póliza</th>
-                                <th>Comisión</th>
-                                <th>NAP</th>
-                                <th>Estatus</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cuerpoTabla">
-                            <tr><td colspan="6" style="text-align:center;color:#999;">Cargando datos...</td></tr>
-                        </tbody>
-                    </table>
+
+                <div class="section-content" style="margin-top:24px;">
+                    <h4 style="color:#0f2b4a; margin-bottom:12px;">🏆 Top Agentes</h4>
+                    <div id="topAgentesContainer">
+                        <p class="loading-message">Cargando datos...</p>
+                    </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- JERARQUÍA -->
-        <section class="page" id="page-jerarquia">
-            <h2 class="section-title">🏢 Jerarquía</h2>
-            <div class="search-box">
-                <input type="text" id="searchAgent" placeholder="🔍 Buscar por nombre, ID o NPN..." oninput="onSearchInput()">
-                <button class="clear-btn" id="clearSearchBtn" onclick="limpiarBusqueda()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="section-content" id="contenidoJerarquia">
-                <p class="loading-message">Cargando organigrama...</p>
-            </div>
-        </section>
-
-        <!-- CONTRATACIONES -->
-        <section class="page" id="page-contrataciones">
-            <h2 class="section-title">📋 Contrataciones</h2>
-            <div class="section-content" id="contenidoContrataciones"><p class="loading-message">Cargando contratos...</p></div>
-        </section>
-
-        <!-- PAGOS -->
-        <section class="page" id="page-pagos">
-            <h2 class="section-title">💰 Pagos</h2>
-            <div class="section-content" id="contenidoPagos">
-                <div class="search-box" id="pagosSearchBox" style="display:none;">
-                    <input type="text" id="searchPagos" placeholder="🔍 Buscar por Código de Póliza o Cliente..." oninput="filtrarPagos()">
-                    <button class="clear-btn" id="clearPagosBtn" onclick="limpiarBusquedaPagos()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+                <div class="indicadores-extra">
+                    <div class="indicador-box" style="grid-column: 1 / 2;">
+                        <h4>🏅 Top 5 por Producto</h4>
+                        <div id="topPorProductoContainer">
+                            <p class="loading-message">Cargando...</p>
+                        </div>
+                    </div>
+                    <div class="indicador-box" style="grid-column: 2 / 3;">
+                        <h4>⏳ Días sin procesar</h4>
+                        <div id="diasSinVentaContainer">
+                            <p class="loading-message">Cargando...</p>
+                        </div>
+                        <hr style="margin: 16px 0; border-color: #eef2f7;">
+                        <h4>🆕 Procesamientos Recientes</h4>
+                        <div id="ventasRecientesContainer">
+                            <p class="loading-message">Cargando...</p>
+                        </div>
+                    </div>
                 </div>
-                <div id="pagosTableContainer"><p class="loading-message">Cargando pagos...</p></div>
-            </div>
-        </section>
+            </section>
 
-        <!-- COMISIONES -->
-        <section class="page" id="page-comisiones">
-            <h2 class="section-title">📈 Comisiones</h2>
-            <div class="section-content" id="contenidoComisiones">
-                <div class="search-box" id="comisionesSearchBox" style="display:none;">
-                    <input type="text" id="searchComisiones" placeholder="🔍 Buscar por Cliente, Póliza o Advance..." oninput="filtrarComisiones()">
-                    <button class="clear-btn" id="clearComisionesBtn" onclick="limpiarBusquedaComisiones()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+            <!-- PRODUCCIÓN -->
+            <section class="page" id="page-produccion">
+                <h2 class="section-title">📄 Producción de Pólizas</h2>
+                <div class="filtro-fechas" id="filtroFechasProduccion">
+                    <div class="fecha-inputs">
+                        <span class="rango-label"><i class="fas fa-calendar-alt"></i> Rango:</span>
+                        <input type="text" class="rango-input" id="rangoProd" placeholder="Seleccionar rango de fechas">
+                    </div>
+                    <div class="acciones">
+                        <button class="btn-primary" onclick="aplicarFiltroFechas()">Aplicar</button>
+                        <button class="btn-secundario" onclick="setRangoMes()">Este mes</button>
+                        <button class="btn-secundario" onclick="setRangoMesAnterior()">Mes anterior</button>
+                        <button class="btn-secundario" style="color:#dc3545;" onclick="limpiarFiltroFechas()">Limpiar</button>
+                    </div>
                 </div>
-                <div id="comisionesTableContainer"><p class="loading-message">Cargando comisiones...</p></div>
-            </div>
-        </section>
-
-        <!-- BONOS -->
-        <section class="page" id="page-bonos">
-            <h2 class="section-title">🎁 Bonos</h2>
-            <div class="section-content" id="contenidoBonos">
-                <div class="filtro-mes" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
-                    <span class="label"><i class="fas fa-calendar-alt"></i> Mes:</span>
-                    <select id="selectMesBonos" onchange="renderizarBonos()" style="padding:8px 16px; border-radius:8px; border:1px solid #ccc; font-size:0.95rem; background:white;">
-                        <option value="todos">Todos</option>
-                    </select>
+                <div class="cards-grid" style="margin-top:0;">
+                    <div class="card" style="border-top-color:#28a745;"><i class="fas fa-file-signature"></i><div class="number" id="totalPolizas">0</div><div class="label">Total Pólizas</div></div>
+                    <div class="card" style="border-top-color:#ffc107;"><i class="fas fa-check-circle"></i><div class="number" id="totalActivas">0</div><div class="label">Pólizas Activas</div></div>
+                    <div class="card" style="border-top-color:#17a2b8;"><i class="fas fa-dollar-sign"></i><div class="number" id="totalPrima">0.00</div><div class="label">Prima NAP Total</div></div>
                 </div>
-                <div class="search-box" id="bonosSearchBox" style="display:none;">
-                    <input type="text" id="searchBonos" placeholder="🔍 Buscar por Agente..." oninput="filtrarBonos()">
-                    <button class="clear-btn" id="clearBonosBtn" onclick="limpiarBusquedaBonos()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+                <div class="cards-grid" style="margin-top:8px; margin-bottom:16px;">
+                    <div class="card" style="border-top-color:#fd7e14;"><div class="number" id="totalPendientes">0</div><div class="label">Pendientes</div></div>
+                    <div class="card" style="border-top-color:#dc3545;"><div class="number" id="totalTerminadas">0</div><div class="label">Terminadas</div></div>
+                    <div class="card" style="border-top-color:#6f42c1;"><div class="number" id="totalSuspendidas">0</div><div class="label">Suspendidas</div></div>
+                    <div class="card" style="border-top-color:#17a2b8;"><div class="number" id="totalAgentes">0</div><div class="label">Agentes en campo</div></div>
                 </div>
-                <div id="bonosTableContainer"><p class="loading-message">Cargando bonos...</p></div>
+
+                <div class="section-content" style="margin-top:8px;">
+                    <h4 style="color:#0f2b4a; margin-bottom:12px;">📋 Libro de Negocios</h4>
+                    <div class="filtro-botones" id="filtroBotones">
+                        <span class="label"><i class="fas fa-filter"></i> Estatus:</span>
+                        <button class="btn-filtro active" data-filtro="todas">Todas</button>
+                        <button class="btn-filtro" data-filtro="activa">Activas</button>
+                        <button class="btn-filtro" data-filtro="pendiente">Pendientes</button>
+                        <button class="btn-filtro" data-filtro="terminada">Terminadas</button>
+                        <button class="btn-filtro" data-filtro="suspendida">Suspendidas</button>
+                    </div>
+                    <div class="filtro-productos" id="filtroProductos">
+                        <span class="label"><i class="fas fa-tag"></i> Producto:</span>
+                        <button class="btn-filtro active" data-producto="todas">Todos</button>
+                        <button class="btn-filtro" data-producto="accident">Accident</button>
+                        <button class="btn-filtro" data-producto="cancer">Cancer</button>
+                        <button class="btn-filtro" data-producto="dvh">DVH</button>
+                        <button class="btn-filtro" data-producto="heart">Heart</button>
+                        <button class="btn-filtro" data-producto="indemnity">Indemnity</button>
+                    </div>
+                    <div class="filtro-agente-select">
+                        <span class="label"><i class="fas fa-user"></i> Agente:</span>
+                        <select id="selectAgenteProduccion" onchange="renderizarProduccion()">
+                            <option value="todos">Todos</option>
+                        </select>
+                        <span class="label"><i class="fas fa-search"></i> Buscar:</span>
+                        <div class="search-box">
+                            <input type="text" id="searchProduccion" placeholder="Cliente o Código de póliza..." oninput="filtrarBusquedaProduccion()">
+                            <button class="clear-btn" id="clearProdSearchBtn" onclick="limpiarBusquedaProduccion()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="tablaProduccion">
+                            <thead>
+                                <tr>
+                                    <th>Agente</th>
+                                    <th>Producto</th>
+                                    <th>Código Póliza</th>
+                                    <th>Comisión</th>
+                                    <th>NAP</th>
+                                    <th>Estatus</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoTabla">
+                                <tr><td colspan="6" style="text-align:center;color:#999;">Cargando datos...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- JERARQUÍA -->
+            <section class="page" id="page-jerarquia">
+                <h2 class="section-title">🏢 Jerarquía</h2>
+                <div class="search-box">
+                    <input type="text" id="searchAgent" placeholder="🔍 Buscar por nombre, ID o NPN..." oninput="onSearchInput()">
+                    <button class="clear-btn" id="clearSearchBtn" onclick="limpiarBusqueda()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="section-content" id="contenidoJerarquia">
+                    <p class="loading-message">Cargando organigrama...</p>
+                </div>
+            </section>
+
+            <!-- CONTRATACIONES -->
+            <section class="page" id="page-contrataciones">
+                <h2 class="section-title">📋 Contrataciones</h2>
+                <div class="section-content" id="contenidoContrataciones"><p class="loading-message">Cargando contratos...</p></div>
+            </section>
+
+            <!-- PAGOS -->
+            <section class="page" id="page-pagos">
+                <h2 class="section-title">💰 Pagos</h2>
+                <div class="section-content" id="contenidoPagos">
+                    <div class="search-box" id="pagosSearchBox" style="display:none;">
+                        <input type="text" id="searchPagos" placeholder="🔍 Buscar por Código de Póliza o Cliente..." oninput="filtrarPagos()">
+                        <button class="clear-btn" id="clearPagosBtn" onclick="limpiarBusquedaPagos()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div id="pagosTableContainer"><p class="loading-message">Cargando pagos...</p></div>
+                </div>
+            </section>
+
+            <!-- COMISIONES -->
+            <section class="page" id="page-comisiones">
+                <h2 class="section-title">📈 Comisiones</h2>
+                <div class="section-content" id="contenidoComisiones">
+                    <div class="search-box" id="comisionesSearchBox" style="display:none;">
+                        <input type="text" id="searchComisiones" placeholder="🔍 Buscar por Cliente, Póliza o Advance..." oninput="filtrarComisiones()">
+                        <button class="clear-btn" id="clearComisionesBtn" onclick="limpiarBusquedaComisiones()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div id="comisionesTableContainer"><p class="loading-message">Cargando comisiones...</p></div>
+                </div>
+            </section>
+
+            <!-- BONOS -->
+            <section class="page" id="page-bonos">
+                <h2 class="section-title">🎁 Bonos</h2>
+                <div class="section-content" id="contenidoBonos">
+                    <div class="filtro-mes" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px;">
+                        <span class="label"><i class="fas fa-calendar-alt"></i> Mes:</span>
+                        <select id="selectMesBonos" onchange="renderizarBonos()" style="padding:8px 16px; border-radius:8px; border:1px solid #ccc; font-size:0.95rem; background:white;">
+                            <option value="todos">Todos</option>
+                        </select>
+                    </div>
+                    <div class="search-box" id="bonosSearchBox" style="display:none;">
+                        <input type="text" id="searchBonos" placeholder="🔍 Buscar por Agente..." oninput="filtrarBonos()">
+                        <button class="clear-btn" id="clearBonosBtn" onclick="limpiarBusquedaBonos()" title="Limpiar búsqueda"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div id="bonosTableContainer"><p class="loading-message">Cargando bonos...</p></div>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav" id="bottomNav">
+            <button class="nav-item active" data-page="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></button>
+            <button class="nav-item" data-page="produccion"><i class="fas fa-file-invoice"></i><span>Producción</span></button>
+            <button class="nav-item" data-page="jerarquia"><i class="fas fa-sitemap"></i><span>Jerarquía</span></button>
+            <button class="nav-item" data-page="contrataciones"><i class="fas fa-user-plus"></i><span>Contrataciones</span></button>
+            <button class="nav-item" data-page="pagos"><i class="fas fa-money-bill-wave"></i><span>Pagos</span></button>
+            <button class="nav-item" data-page="comisiones"><i class="fas fa-coins"></i><span>Comisiones</span></button>
+            <button class="nav-item" data-page="bonos"><i class="fas fa-gift"></i><span>Bonos</span></button>
+        </nav>
+
+        <div id="infoModal" class="modal-overlay hidden">
+            <div class="modal-box">
+                <button class="close-btn" onclick="cerrarModal()">&times;</button>
+                <h3 id="modalTitle">👤 Información</h3>
+                <div id="modalContent"></div>
             </div>
-        </section>
-    </main>
-
-    <nav class="bottom-nav" id="bottomNav">
-        <button class="nav-item active" data-page="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></button>
-        <button class="nav-item" data-page="produccion"><i class="fas fa-file-invoice"></i><span>Producción</span></button>
-        <button class="nav-item" data-page="jerarquia"><i class="fas fa-sitemap"></i><span>Jerarquía</span></button>
-        <button class="nav-item" data-page="contrataciones"><i class="fas fa-user-plus"></i><span>Contrataciones</span></button>
-        <button class="nav-item" data-page="pagos"><i class="fas fa-money-bill-wave"></i><span>Pagos</span></button>
-        <button class="nav-item" data-page="comisiones"><i class="fas fa-coins"></i><span>Comisiones</span></button>
-        <button class="nav-item" data-page="bonos"><i class="fas fa-gift"></i><span>Bonos</span></button>
-    </nav>
-
-    <div id="infoModal" class="modal-overlay hidden">
-        <div class="modal-box">
-            <button class="close-btn" onclick="cerrarModal()">&times;</button>
-            <h3 id="modalTitle">👤 Información</h3>
-            <div id="modalContent"></div>
         </div>
     </div>
 
     <script>
+        // =============================================================
+        //  ESCALADO PARA MÓVILES
+        // =============================================================
+        function ajustarEscala() {
+            const wrapper = document.getElementById('app-wrapper');
+            const anchoDisponible = window.innerWidth;
+            const anchoBase = 1200;
+            const escala = Math.min(1, anchoDisponible / anchoBase);
+            // Aplicar escala
+            wrapper.style.transform = `scale(${escala})`;
+            wrapper.style.transformOrigin = 'top left';
+            // Ajustar altura para que ocupe toda la pantalla
+            wrapper.style.height = `${window.innerHeight / escala}px`;
+            // Ajustar el ancho del wrapper al ancho base (ya lo tiene)
+            // El body debe tener overflow hidden para que no haya scroll horizontal
+            document.body.style.overflow = 'hidden';
+        }
+
+        window.addEventListener('load', ajustarEscala);
+        window.addEventListener('resize', ajustarEscala);
+
         // =============================================================
         //  PANEL DE DEPURACIÓN (solo consola)
         // =============================================================
@@ -3334,7 +3161,7 @@
         }
 
         // =============================================================
-        //  CARGA DE DATOS (SOLO TABLAS EXISTENTES)
+        //  CARGA DE DATOS
         // =============================================================
         async function cargarDatos() {
             addLog('⏳ Cargando datos desde Supabase...', 'info');
